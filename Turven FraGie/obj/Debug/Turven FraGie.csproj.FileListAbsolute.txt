@@ -8,13 +8,3 @@ C:\Users\Frank Haver\Documents\Frank\Turf Project\Implementatie\Turven FraGie\Tu
 C:\Users\Frank Haver\Documents\Frank\Turf Project\Implementatie\Turven FraGie\Turven FraGie\obj\Debug\Turven FraGie.exe
 C:\Users\Frank Haver\Documents\Frank\Turf Project\Implementatie\Turven FraGie\Turven FraGie\obj\Debug\Turven FraGie.pdb
 C:\Users\Frank Haver\Documents\Frank\Turf Project\Implementatie\Turven FraGie\Turven FraGie\obj\Debug\Turven_FraGie.Forms.MaakAccountForm.resources
-C:\Users\Frank Haver\Documents\Frank\Turf Project\Implementatie\Turven FraGie\TurfProject\Turven FraGie\bin\Debug\Turven FraGie.exe.config
-C:\Users\Frank Haver\Documents\Frank\Turf Project\Implementatie\Turven FraGie\TurfProject\Turven FraGie\obj\Debug\Turven FraGie.exe
-C:\Users\Frank Haver\Documents\Frank\Turf Project\Implementatie\Turven FraGie\TurfProject\Turven FraGie\obj\Debug\Turven FraGie.pdb
-C:\Users\Frank Haver\Documents\Frank\Turf Project\Implementatie\Turven FraGie\TurfProject\Turven FraGie\bin\Debug\Turven FraGie.exe
-C:\Users\Frank Haver\Documents\Frank\Turf Project\Implementatie\Turven FraGie\TurfProject\Turven FraGie\bin\Debug\Turven FraGie.pdb
-C:\Users\Frank Haver\Documents\Frank\Turf Project\Implementatie\Turven FraGie\TurfProject\Turven FraGie\obj\Debug\Turven FraGie.csprojResolveAssemblyReference.cache
-C:\Users\Frank Haver\Documents\Frank\Turf Project\Implementatie\Turven FraGie\TurfProject\Turven FraGie\obj\Debug\Turven_FraGie.InlogForm.resources
-C:\Users\Frank Haver\Documents\Frank\Turf Project\Implementatie\Turven FraGie\TurfProject\Turven FraGie\obj\Debug\Turven_FraGie.Forms.MaakAccountForm.resources
-C:\Users\Frank Haver\Documents\Frank\Turf Project\Implementatie\Turven FraGie\TurfProject\Turven FraGie\obj\Debug\Turven_FraGie.Properties.Resources.resources
-C:\Users\Frank Haver\Documents\Frank\Turf Project\Implementatie\Turven FraGie\TurfProject\Turven FraGie\obj\Debug\Turven FraGie.csproj.GenerateResource.Cache
