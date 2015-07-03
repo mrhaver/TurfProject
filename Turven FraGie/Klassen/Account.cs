@@ -19,6 +19,16 @@ namespace Turven_FraGie.Klassen
             get { return inlogNaam; }
         }
 
+        public string Wachtwoord
+        {
+            get { return wachtwoord; }
+        }
+
+        public string AccountType
+        {
+            get { return accountType; }
+        }
+
         // Constructor(s)
         public Account(string inlogNaam, Vereniging vereniging, string wachtwoord, string accountType)
         {
@@ -32,6 +42,15 @@ namespace Turven_FraGie.Klassen
         public override string ToString()
         {
             return base.ToString();
+        }
+
+        public bool LogIn(string ww)
+        {
+            if(ww == this.wachtwoord)
+            {
+                return true;
+            }
+            return false;
         }
     }
 }

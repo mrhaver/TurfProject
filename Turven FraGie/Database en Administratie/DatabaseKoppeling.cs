@@ -44,7 +44,7 @@ namespace Turven_FraGie
                 }
                 return tempVereniging;
             }
-            catch(Exception ex)
+            catch(Exception)
             {
                 return tempVereniging;
             }

@@ -14,7 +14,14 @@ namespace Turven_FraGie.Database_en_Administratie
     public class Administratie
     {
         // Fields / Properties
-        DatabaseKoppeling databaseKoppeling;
+        private DatabaseKoppeling databaseKoppeling;
+        private static Account nuIngelogd;
+
+        public Account NuIngelogd
+        {
+            get { return nuIngelogd; }
+            set { nuIngelogd = value; }
+        }
 
         public List<Vereniging> Verenigingen
         {
@@ -56,6 +63,18 @@ namespace Turven_FraGie.Database_en_Administratie
             {
                 return false;
             }
+        }
+
+        public Account GeefAccount(string inlogNaam)
+        {
+            foreach(Account a in Accounts)
+            {
+                if(inlogNaam == a.InlogNaam)
+                {
+                    return a;
+                }
+            }
+            return null;
         }
         #endregion
     }

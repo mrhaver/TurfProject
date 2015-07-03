@@ -70,8 +70,10 @@
             this.tbWachtwoord.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.tbWachtwoord.Location = new System.Drawing.Point(894, 270);
             this.tbWachtwoord.Name = "tbWachtwoord";
+            this.tbWachtwoord.PasswordChar = '*';
             this.tbWachtwoord.Size = new System.Drawing.Size(225, 36);
             this.tbWachtwoord.TabIndex = 4;
+            this.tbWachtwoord.KeyDown += new System.Windows.Forms.KeyEventHandler(this.tbWachtwoord_KeyDown);
             // 
             // btnLogIn
             // 
@@ -82,6 +84,7 @@
             this.btnLogIn.TabIndex = 5;
             this.btnLogIn.Text = "Log In";
             this.btnLogIn.UseVisualStyleBackColor = true;
+            this.btnLogIn.Click += new System.EventHandler(this.btnLogIn_Click);
             // 
             // btnMaakAccount
             // 
