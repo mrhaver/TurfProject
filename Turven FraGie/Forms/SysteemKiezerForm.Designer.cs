@@ -43,6 +43,7 @@
             this.btnTeamBeheer.TabIndex = 0;
             this.btnTeamBeheer.Text = "Team Beheer";
             this.btnTeamBeheer.UseVisualStyleBackColor = true;
+            this.btnTeamBeheer.Click += new System.EventHandler(this.btnTeamBeheer_Click);
             // 
             // btnTurfWedstrijd
             // 

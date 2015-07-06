@@ -78,7 +78,36 @@ namespace Turven_FraGie
             {
                 conn.Close();
             }
+
         }
+
+        public List<Competitie> HaalCompetitiesOp()
+        {
+            List<Competitie> tempCompetities = new List<Competitie>();
+            try
+            {
+                conn.Open();
+                string query = "SELECT * FROM COMPETITIE";
+                command = new OracleCommand(query, conn);
+                OracleDataReader dataReader = command.ExecuteReader();
+                while (dataReader.Read())
+                {
+                    tempCompetities.Add(new Competitie(Convert.ToString(dataReader["CODE"]), Convert.ToString(dataReader["NIVEAU"]), Convert.ToString(dataReader["POULE"]),
+                        Convert.ToString(dataReader["REGIO"])));
+                }
+                return tempCompetities;
+            }
+            catch
+            {
+                return tempCompetities;
+            }
+            finally
+            {
+                conn.Close();
+            }
+
+        }
+
         #endregion
 
         #region Vereniging
@@ -147,5 +176,122 @@ namespace Turven_FraGie
         }
 
         #endregion
+
+        #region Competitie
+
+        public bool MaakCompetitie(string code, string niveau, string poule, string regio)
+        {
+            try
+            {
+                conn.Open();
+                string query = "INSERT INTO COMPETITIE VALUES(:code, :niveau, :poule, :regio)";
+                command = new OracleCommand(query, conn);
+                command.Parameters.Add("code", OracleDbType.Varchar2).Value = code;
+                command.Parameters.Add("niveau", OracleDbType.Varchar2).Value = niveau;
+                command.Parameters.Add("poule", OracleDbType.Varchar2).Value = poule;
+                command.Parameters.Add("regio", OracleDbType.Varchar2).Value = regio;
+                command.ExecuteNonQuery();
+                return true;
+            }
+            catch(Exception)
+            {
+                return false;
+            }
+            finally
+            {
+                conn.Close();
+            }
+        }
+
+        public bool WijzigCompetitie(string code, string niveau, string poule, string regio)
+        {
+            try
+            {
+                conn.Open();
+                string query = "UPDATE COMPETITIE SET CODE = :code, NIVEAU = :niveau, POULE = :poule, REGIO = :regio WHERE CODE = :code";
+                command = new OracleCommand(query, conn);
+                command.Parameters.Add("code", OracleDbType.Varchar2).Value = code;
+                command.Parameters.Add("niveau", OracleDbType.Varchar2).Value = niveau;
+                command.Parameters.Add("poule", OracleDbType.Varchar2).Value = poule;
+                command.Parameters.Add("regio", OracleDbType.Varchar2).Value = regio;
+                command.ExecuteNonQuery();
+                return true;
+            }
+            catch(Exception)
+            {
+                return false;
+            }
+            finally
+            {
+                conn.Close();
+            }
+        }
+
+        public bool VerwijderTeamSpelers(string compCode)
+        {
+            try
+            {
+                conn.Open();
+                string query = "DELETE FROM TEAM_SPELER WHERE Team_ID IN ( SELECT ID  FROM TEAM WHERE Competitie_Code = :code)";
+                command = new OracleCommand(query, conn);
+                command.Parameters.Add("code", OracleDbType.Varchar2).Value = compCode;
+                command.ExecuteNonQuery();
+                return true;
+            }
+            catch(Exception)
+            {
+                return false;
+            }
+            finally
+            {
+                conn.Close();
+            }
+        }
+
+        public bool VerwijderTeams(string compCode)
+        {
+            try
+            {
+                conn.Open();
+                string query = "DELETE FROM TEAM WHERE Competitie_Code = :code";
+                command = new OracleCommand(query, conn);
+                command.Parameters.Add("code", OracleDbType.Varchar2).Value = compCode;
+                command.ExecuteNonQuery();
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+            finally
+            {
+                conn.Close();
+            }
+        }
+
+        public bool VerwijderCompetitie(string compCode)
+        {
+            try
+            {
+                conn.Open();
+                string query = "DELETE FROM COMPETITIE WHERE Code = :code";
+                command = new OracleCommand(query, conn);
+                command.Parameters.Add("code", OracleDbType.Varchar2).Value = compCode;
+                command.ExecuteNonQuery();
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+            finally
+            {
+                conn.Close();
+            }
+        }
+
+        #endregion
+
+
     }
 }

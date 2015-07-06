@@ -33,6 +33,11 @@ namespace Turven_FraGie.Database_en_Administratie
             get { return databaseKoppeling.HaalAccountsOp(); }
         }
 
+        public List<Competitie> Competities
+        {
+            get { return databaseKoppeling.HaalCompetitiesOp(); }
+        }
+
         // Constructor(s)
         public Administratie()
         {
@@ -76,6 +81,103 @@ namespace Turven_FraGie.Database_en_Administratie
             }
             return null;
         }
+        #endregion
+
+        #region Competitie
+
+        /// <summary>
+        /// check even of de code niet al bestaat
+        /// </summary>
+        public bool MaakCompetitie(string code, string niveau, string poule, string regio, out string error)
+        {
+            error = "";
+            foreach(Competitie c in Competities)
+            {
+                if(c.Code == code)
+                {
+                    error = "Competitiecode bestaat al";
+                    return false;
+                }
+            }
+            if(!databaseKoppeling.MaakCompetitie(code, niveau, poule, regio))
+            {
+                error = "Fout in de database";
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+        }
+
+        /// <summary>
+        /// de code moet bestaan anders kan er niets worden aangepast
+        /// </summary>
+        public bool WijzigCompetitie(string code, string niveau, string poule, string regio, out string error)
+        {
+            foreach(Competitie c in Competities)
+            {
+                if(c.Code == code)
+                {
+                    // voor deze code moet worden upgedate
+                    if(!databaseKoppeling.WijzigCompetitie(code, niveau, poule, regio))
+                    {
+                        error = "Fout in de database";
+                        return false;
+                    }
+                    else
+                    {
+                        error = "";
+                        return true;
+                    }
+                }
+            }
+            error = "Competitiecode kon niet gevonden worden";
+            return false;
+        }
+
+        /// <summary>
+        /// Als er een competitie verwijderd moet worden dan moeten ook alle child records verwijderd worden
+        /// Dat zijn in dit geval de team_spelers en de teams
+        /// </summary>
+        public bool VerwijderCompetitie(string compCode, out string error)
+        {
+            error = "";
+            foreach (Competitie c in Competities)
+            {
+                if (c.Code == compCode)
+                {
+                    if (databaseKoppeling.VerwijderTeamSpelers(compCode))
+                    {
+                        if (databaseKoppeling.VerwijderTeams(compCode))
+                        {
+                            if (databaseKoppeling.VerwijderCompetitie(compCode))
+                            {
+                                return true;
+                            }
+                            else
+                            {
+                                error = "Competities konden niet verwijderd worden";
+                                return false;
+                            }
+                        }
+                        else
+                        {
+                            error = "Teams konden niet verwijderd worden";
+                            return false;
+                        }
+                    }
+                    else
+                    {
+                        error = "Team Spelers konden niet verwijderd worden";
+                        return false;
+                    }
+                }
+            }
+            error = "Competitiecode kon niet gevonden worden";
+            return false;
+        }
+
         #endregion
     }
 }

@@ -19,3 +19,4 @@ C:\Users\Frank Haver\Documents\Frank\Turf Project\Implementatie\Turven FraGie\Tu
 C:\Users\Frank Haver\Documents\Frank\Turf Project\Implementatie\Turven FraGie\TurfProject\Turven FraGie\obj\Debug\Turven_FraGie.Properties.Resources.resources
 C:\Users\Frank Haver\Documents\Frank\Turf Project\Implementatie\Turven FraGie\TurfProject\Turven FraGie\obj\Debug\Turven FraGie.csproj.GenerateResource.Cache
 C:\Users\Frank Haver\Documents\Frank\Turf Project\Implementatie\Turven FraGie\TurfProject\Turven FraGie\obj\Debug\Turven_FraGie.Forms.SysteemKiezerForm.resources
+C:\Users\Frank Haver\Documents\Frank\Turf Project\Implementatie\Turven FraGie\TurfProject\Turven FraGie\obj\Debug\Turven_FraGie.Forms.TeamBeheer.resources

@@ -26,11 +26,10 @@ namespace Turven_FraGie.Forms
             InitializeComponent();
             WindowState = FormWindowState.Maximized;
             administratie = new Administratie();
-            VerwijsDoor();
         }
 
-       
-        // Event Handlers
+
+        #region Event Handlers
         /// <summary>
         /// Verwijs door voor het turven van een wedstrijd.
         /// </summary>
@@ -49,19 +48,13 @@ namespace Turven_FraGie.Forms
             this.Close();
         }
 
-        // Methods
-
-        /// <summary>
-        /// als het nuingelogde account een turver is wordt deze meteen doorverwezen
-        /// </summary>
-        private void VerwijsDoor()
+        private void btnTeamBeheer_Click(object sender, EventArgs e)
         {
-            // op dit moment kan de turver nog niets
-            if(administratie.NuIngelogd.AccountType == "TURVER")
-            {
-
-            }
+            TeamBeheer teamBeheer = new TeamBeheer();
+            teamBeheer.Show();
+            this.Hide();
         }
+        #endregion
 
 
     }

@@ -24,10 +24,12 @@ namespace Turven_FraGie
         {
             InitializeComponent();
             WindowState = FormWindowState.Maximized;
-
             administratie = new Administratie();
+            tbInlognaam.Text = "FrankHaver";
+            tbWachtwoord.Text = "HaverFrank";
         }
 
+        #region Event Handlers
         /// <summary>
         /// Gaat naar het formulier voor het maken van een account.
         /// </summary>
@@ -56,9 +58,8 @@ namespace Turven_FraGie
                 LogIn();
             }
         }
-
-        // Methods
-
+        #endregion
+        #region Methods
         /// <summary>
         /// als er op de button geklikt wordt of als er op enter getikt wordt moet er
         /// worden ingelogd.
@@ -94,6 +95,6 @@ namespace Turven_FraGie
             MessageBox.Show("Inlognaam niet gevonden");
         }
 
-
+        #endregion
     }
 }
