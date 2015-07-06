@@ -40,6 +40,10 @@ namespace Turven_FraGie.Forms
                 else
                 {
                     MessageBox.Show("Competitie Toegevoegd");
+                    tbCompCode.Text = "";
+                    tbCompNiveau.Text = "";
+                    tbCompPoule.Text = "";
+                    tbCompRegio.Text = "";
                 }
             }
             else
@@ -99,6 +103,11 @@ namespace Turven_FraGie.Forms
                 else
                 {
                     MessageBox.Show("Competitie Verwijderd");
+                    tbWcode.Text = "";
+                    tbWNiveau.Text = "";
+                    tbWPoule.Text = "";
+                    tbWRegio.Text = "";
+                    tbWZoekComp.Text = "";
                 }
             }
             else
