@@ -73,10 +73,36 @@ namespace Turven_FraGie
                             v.Locatie.Huisnummer = Convert.ToString(dataReader["HUISNUMMER"]);
                         }
                     }
+                }                
+            }
+            catch(Exception)
+            {
+                return null;
+            }
+            finally
+            {
+                conn.Close();
+            }
+
+            try
+            {
+                conn.Open();
+                string query = "SELECT * FROM TEAM";
+                command = new OracleCommand(query, conn);
+                OracleDataReader dataReader = command.ExecuteReader();
+                while (dataReader.Read())
+                {
+                    foreach (Vereniging v in tempVereniging)
+                    {
+                        if (v.Naam == Convert.ToString(dataReader["VERENIGING_NAAM"]))
+                        {
+                            v.Teams.Add(new Team(Convert.ToString(dataReader["VERENIGING_NAAM"]), Convert.ToString(dataReader["TEAMCODE"]), Convert.ToInt32(dataReader["ID"])));
+                        }
+                    }
                 }
                 return tempVereniging;
             }
-            catch(Exception)
+            catch (Exception)
             {
                 return null;
             }
@@ -137,7 +163,6 @@ namespace Turven_FraGie
             {
                 conn.Close();
             }
-
         }
 
         #endregion
@@ -408,6 +433,79 @@ namespace Turven_FraGie
                 query = "DELETE FROM VERENIGING WHERE NAAM = :vNaam";
                 command = new OracleCommand(query, conn);
                 command.Parameters.Add("vNaam", OracleDbType.Varchar2).Value = vNaam;
+                command.ExecuteNonQuery();
+                return true;
+            }
+            catch(Exception)
+            {
+                return false;
+            }
+            finally
+            {
+                conn.Close();
+            }
+        }
+
+        #endregion
+
+        #region Teams
+        public bool MaakTeam(string verenigingNaam, string teamCode)
+        {
+            try
+            {
+                command = new OracleCommand("MAAKTEAM", conn);
+                command.CommandType = CommandType.StoredProcedure;
+                command.Parameters.Add("P_VERENIGING_NAAM", OracleDbType.Varchar2).Value = verenigingNaam;
+                command.Parameters.Add("P_TEAM_CODE", OracleDbType.Varchar2).Value = teamCode;
+                conn.Open();
+                OracleDataAdapter da = new OracleDataAdapter(command);
+                command.ExecuteNonQuery();
+                return true;
+            }
+            catch(Exception)
+            {
+                return false;
+            }
+            finally
+            {
+                conn.Close();
+            }
+        }
+
+        public bool WijzigTeam(int id, string teamCode)
+        {
+            try
+            {
+                conn.Open();
+                string query = "UPDATE TEAM SET TEAMCODE = :teamcode WHERE ID = :id";
+                command = new OracleCommand(query, conn);
+                command.Parameters.Add("teamcode", OracleDbType.Varchar2).Value = teamCode;
+                command.Parameters.Add("id", OracleDbType.Int32).Value = id;
+                command.ExecuteNonQuery();
+                return true;
+            }
+            catch(Exception)
+            {
+                return false;
+            }
+            finally
+            {
+                conn.Close();
+            }
+        }
+
+        public bool VerwijderTeam(int id)
+        {
+            try
+            {
+                conn.Open();
+                string query = "DELETE FROM TEAM WHERE ID = :id";
+                command = new OracleCommand(query, conn);
+                command.Parameters.Add("id", OracleDbType.Int32).Value = id;
+                command.ExecuteNonQuery();
+                query = "DELETE FROM TEAM_SPELER WHERE TEAM_ID = :id";
+                command = new OracleCommand(query, conn);
+                command.Parameters.Add("id", OracleDbType.Int32).Value = id;
                 command.ExecuteNonQuery();
                 return true;
             }

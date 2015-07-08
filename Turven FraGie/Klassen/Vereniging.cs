@@ -11,6 +11,7 @@ namespace Turven_FraGie.Klassen
         // Fields / Properties
         private string naam;
         private Locatie locatie;
+        private List<Team> teams;
 
         public string Naam
         {
@@ -23,11 +24,18 @@ namespace Turven_FraGie.Klassen
             get { return locatie; }
         }
 
+        public List<Team> Teams
+        {
+            get { return teams; }
+            set { teams = value; }
+        }
+
         // Constructor(s)
         public Vereniging(string naam)
         {
             this.naam = naam;
             this.locatie = new Locatie();
+            this.teams = new List<Team>();
         }
 
         public Vereniging(string naam, Locatie locatie)

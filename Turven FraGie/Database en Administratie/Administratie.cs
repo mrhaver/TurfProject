@@ -82,7 +82,6 @@ namespace Turven_FraGie.Database_en_Administratie
             return null;
         }
         #endregion
-
         #region Competitie
 
         /// <summary>
@@ -228,6 +227,62 @@ namespace Turven_FraGie.Database_en_Administratie
             }
         }
 
+        #endregion
+        #region Team
+
+        public bool MaakTeam(string verenigingNaam, string teamCode, out string error)
+        {
+            // check of de naam al dan niet bestaat
+            foreach(Vereniging v in Verenigingen)
+            {
+                if(v.Naam == verenigingNaam)
+                {
+                    foreach(Team t in v.Teams)
+                    {
+                        if(t.TeamCode == teamCode)
+                        {
+                            error = "Teamcode bestaat al";
+                            return false;
+                        }
+                    }                   
+                }
+            }
+            if (!databaseKoppeling.MaakTeam(verenigingNaam, teamCode))
+            {
+                error = "Fout in de database raadpleeg de applicatiebeheerder";
+                return false;
+            }
+            else
+            {
+                error = "";
+                return true;
+            }
+        }
+
+        public bool WijzigTeam(int id, string teamCode)
+        {
+            if(!databaseKoppeling.WijzigTeam(id, teamCode))
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+        }
+
+        public bool VerwijderTeam(int id)
+        {
+            if(!databaseKoppeling.VerwijderTeam(id))
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+        }
+        
         #endregion
     }
 }
