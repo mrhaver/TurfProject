@@ -147,25 +147,17 @@ namespace Turven_FraGie.Database_en_Administratie
             {
                 if (c.Code == compCode)
                 {
-                    if (databaseKoppeling.VerwijderTeamSpelers(compCode))
-                    {
-                        if (databaseKoppeling.VerwijderTeams(compCode))
+                    if (databaseKoppeling.VerwijderCompetitieTeam(compCode))
+                    {                        
+                        if (databaseKoppeling.VerwijderCompetitie(compCode))
                         {
-                            if (databaseKoppeling.VerwijderCompetitie(compCode))
-                            {
-                                return true;
-                            }
-                            else
-                            {
-                                error = "Competities konden niet verwijderd worden";
-                                return false;
-                            }
+                            return true;
                         }
                         else
                         {
-                            error = "Teams konden niet verwijderd worden";
+                            error = "Competities konden niet verwijderd worden";
                             return false;
-                        }
+                        }                        
                     }
                     else
                     {
@@ -176,6 +168,64 @@ namespace Turven_FraGie.Database_en_Administratie
             }
             error = "Competitiecode kon niet gevonden worden";
             return false;
+        }
+
+        #endregion
+        #region Vereniging
+        public bool MaakVereniging(string vNaam, string shNaam, string plaats, string postcode, string huisnummer, out string error)
+        {
+            foreach(Vereniging v in Verenigingen)
+            {
+                if(v.Naam == vNaam)
+                {
+                    error = "Vereniging bestaat al";
+                    return false;
+                }
+            }
+            if (databaseKoppeling.MaakVereniging(vNaam))
+            {
+                if (databaseKoppeling.WijsLocatieAanVereniging(vNaam, shNaam, plaats, postcode, huisnummer))
+                {
+                    error = "";
+                    return true;
+                }
+                else
+                {
+                    error = "Locatie niet toe kunnen voegen";
+                    return false;
+                }
+            }
+            else
+            {
+                error = "Vereniging niet aan kunnen maken";
+                return false;
+            }          
+        }
+
+        public bool WijzigVereniging(string vNaam, string oudVNaam, string shNaam, string plaats, string postcode, string huisnummer, int vID, out string error)
+        {
+            if(databaseKoppeling.WijzigVereniging(vNaam, oudVNaam, shNaam, plaats, postcode, huisnummer, vID))
+            {
+                error = "";
+                return true;
+            }
+            else
+            {
+                error = "Vereniging kon niet gewijzigd worden";
+                return false;
+            }
+        }
+
+        public bool VerwijderVereniging(string vNaam)
+        {
+            if(databaseKoppeling.VerwijderVereniging(vNaam))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
 
         #endregion

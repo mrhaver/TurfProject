@@ -24,9 +24,11 @@ namespace Turven_FraGie.Forms
             WindowState = FormWindowState.Maximized;
             administratie = new Administratie();
             VulCompetities();
+            VulVerenigingen();
         }
 
         #region Event Handlers
+        #region Competitie
         private void btnMaakComp_Click(object sender, EventArgs e)
         {
             string error = "";
@@ -92,35 +94,42 @@ namespace Turven_FraGie.Forms
 
         private void btnVerwijderComp_Click(object sender, EventArgs e)
         {
-            string error = "";
-            if(tbWcode.Text != "")
+            DialogResult dialogResult = MessageBox.Show("Weet u zeker dat u de competitie wilt verwijderen?", "Let Op!", MessageBoxButtons.YesNo);
+            if (dialogResult == DialogResult.Yes)
             {
-                if(!administratie.VerwijderCompetitie(tbWcode.Text, out error))
+                string error = "";
+                if (tbWcode.Text != "")
                 {
-                    MessageBox.Show(error);
-                    return;
+                    if (!administratie.VerwijderCompetitie(tbWcode.Text, out error))
+                    {
+                        MessageBox.Show(error);
+                        return;
+                    }
+                    else
+                    {
+                        MessageBox.Show("Competitie Verwijderd");
+                        tbWcode.Text = "";
+                        tbWNiveau.Text = "";
+                        tbWPoule.Text = "";
+                        tbWRegio.Text = "";
+                        tbWZoekComp.Text = "";
+                    }
                 }
                 else
                 {
-                    MessageBox.Show("Competitie Verwijderd");
-                    tbWcode.Text = "";
-                    tbWNiveau.Text = "";
-                    tbWPoule.Text = "";
-                    tbWRegio.Text = "";
-                    tbWZoekComp.Text = "";
+                    MessageBox.Show("Vul wel een competitiecode in");
+                    return;
                 }
+                VulCompetities();    
             }
-            else
+            else if (dialogResult == DialogResult.No)
             {
-                MessageBox.Show("Vul wel een competitiecode in");
-                return;
-            }
-            VulCompetities();          
+                
+            }                  
         }
 
         private void tbWZoekComp_TextChanged(object sender, EventArgs e)
         {
-
             lbWZoekComp.Items.Clear();
             if (tbWZoekComp.Text != "")
             {
@@ -142,6 +151,113 @@ namespace Turven_FraGie.Forms
             }
         }
 
+        
+
+        #endregion
+        #region Vereniging
+
+        private void btnMaakVereniging_Click(object sender, EventArgs e)
+        {
+            string error = "";
+            if (!administratie.MaakVereniging(tbVerenigingNaam.Text, tbSporthalNaam.Text, tbVerenigingPlaats.Text,
+                tbVerenigingPostcode.Text, tbVerenigingHuisnummer.Text, out error))
+            {
+                MessageBox.Show(error);
+            }
+            else
+            {
+                MessageBox.Show("Vereniging aangemaakt");
+                tbVerenigingNaam.Text = "";
+                tbSporthalNaam.Text = "";
+                tbVerenigingPlaats.Text = "";
+                tbVerenigingPostcode.Text = "";
+                tbVerenigingHuisnummer.Text = "";
+            }
+            VulVerenigingen();
+        }
+
+        private void tbZoekVNaam_TextChanged(object sender, EventArgs e)
+        {
+            lbVerenigingen.Items.Clear();
+            if (tbZoekVNaam.Text != "")
+            {
+                string vNaam;
+                string vZoekNaam = tbZoekVNaam.Text.ToUpper();
+                foreach (Vereniging v in administratie.Verenigingen)
+                {
+                    vNaam = v.Naam.ToUpper();
+                    if (vNaam.Contains(vZoekNaam))
+                    {
+                        lbVerenigingen.Items.Add(v);
+                        lbVerenigingen.SelectedIndex = 0;
+                    }
+                }
+            }
+            else
+            {
+                VulVerenigingen();
+            }
+        }
+
+        private void btnWijzigVereniging_Click(object sender, EventArgs e)
+        {
+            string error = "";
+            Vereniging vereniging = (Vereniging)lbVerenigingen.SelectedItem;
+            if (!administratie.WijzigVereniging(tbWVNaam.Text, vereniging.Naam, tbWVSporthalNaam.Text, tbWVPlaats.Text, tbWVPostcode.Text, tbWVHuisNummer.Text, vereniging.Locatie.ID, out error))
+            {
+                MessageBox.Show(error);
+            }
+            else
+            {
+                MessageBox.Show("Vereniging Gewijzigd");
+            }
+            VulVerenigingen();
+        }
+
+        private void lbVerenigingen_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (lbVerenigingen.SelectedItem != null)
+            {
+                Vereniging vereniging = (Vereniging)lbVerenigingen.SelectedItem;
+                tbWVNaam.Text = vereniging.Naam;
+                tbWVSporthalNaam.Text = vereniging.Locatie.SporthalNaam;
+                tbWVPlaats.Text = vereniging.Locatie.Plaats;
+                tbWVPostcode.Text = vereniging.Locatie.Postcode;
+                tbWVHuisNummer.Text = vereniging.Locatie.Huisnummer;
+            }
+        }
+
+        private void btnVerwijderVereniging_Click(object sender, EventArgs e)
+        {
+            DialogResult dialogResult = MessageBox.Show("Weet u zeker dat u de vereniging wilt verwijderen?\nHierbij verwijdert u ook alle teams, accounts en locatie van de vereniging!", "Let Op!", MessageBoxButtons.YesNo);
+            if (dialogResult == DialogResult.Yes)
+            {
+                Vereniging vereniging = (Vereniging)lbVerenigingen.SelectedItem;
+                if (!administratie.VerwijderVereniging(vereniging.Naam))
+                {
+                    MessageBox.Show("Vereniging kon niet verwijderd worden");
+                }
+                else
+                {
+                    MessageBox.Show("Vereniging verwijderd");
+                }
+                VulVerenigingen();
+            }
+            else if (dialogResult == DialogResult.No)
+            {
+
+            }
+        }
+
+        #endregion
+
+        private void btnTerug_Click(object sender, EventArgs e)
+        {
+            SysteemKiezerForm sysKiezerForm = new SysteemKiezerForm();
+            sysKiezerForm.Show();
+            this.Close();
+        }
+
         #endregion
         #region Methods
         private void VulCompetities()
@@ -154,7 +270,24 @@ namespace Turven_FraGie.Forms
             }
         }
 
+        private void VulVerenigingen()
+        {
+            lbVerenigingen.Items.Clear();
+            foreach(Vereniging v in administratie.Verenigingen)
+            {
+                lbVerenigingen.Items.Add(v);
+                lbVerenigingen.SelectedIndex = 0;
+            }
+        }
         #endregion
+
+
+
+
+
+
+
+        
 
     }
 }

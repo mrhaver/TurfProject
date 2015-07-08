@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Oracle.DataAccess.Client;
 using Oracle.DataAccess.Types;
 using Turven_FraGie.Klassen;
+using System.Data;
 
 namespace Turven_FraGie
 {
@@ -42,11 +43,42 @@ namespace Turven_FraGie
                 {
                     tempVereniging.Add(new Vereniging(Convert.ToString(dataReader["NAAM"])));
                 }
+            }
+            catch(Exception)
+            {
+            }
+            finally
+            {
+                conn.Close();
+            }
+
+            // wijs nu de locatie aan de vereniging
+
+            try
+            {
+                conn.Open();
+                string query = "SELECT * FROM LOCATIE";
+                command = new OracleCommand(query, conn);
+                OracleDataReader dataReader = command.ExecuteReader();
+                while(dataReader.Read())
+                {
+                    foreach(Vereniging v in tempVereniging)
+                    {
+                        if(v.Naam == Convert.ToString(dataReader["VERENIGING_NAAM"]))
+                        {
+                            v.Locatie.ID = Convert.ToInt32(dataReader["ID"]);
+                            v.Locatie.SporthalNaam = Convert.ToString(dataReader["NAAM"]);
+                            v.Locatie.Plaats = Convert.ToString(dataReader["PLAATS"]);
+                            v.Locatie.Postcode = Convert.ToString(dataReader["POSTCODE"]);
+                            v.Locatie.Huisnummer = Convert.ToString(dataReader["HUISNUMMER"]);
+                        }
+                    }
+                }
                 return tempVereniging;
             }
             catch(Exception)
             {
-                return tempVereniging;
+                return null;
             }
             finally
             {
@@ -227,33 +259,12 @@ namespace Turven_FraGie
             }
         }
 
-        public bool VerwijderTeamSpelers(string compCode)
+        public bool VerwijderCompetitieTeam(string compCode)
         {
             try
             {
                 conn.Open();
-                string query = "DELETE FROM TEAM_SPELER WHERE Team_ID IN ( SELECT ID  FROM TEAM WHERE Competitie_Code = :code)";
-                command = new OracleCommand(query, conn);
-                command.Parameters.Add("code", OracleDbType.Varchar2).Value = compCode;
-                command.ExecuteNonQuery();
-                return true;
-            }
-            catch(Exception)
-            {
-                return false;
-            }
-            finally
-            {
-                conn.Close();
-            }
-        }
-
-        public bool VerwijderTeams(string compCode)
-        {
-            try
-            {
-                conn.Open();
-                string query = "DELETE FROM TEAM WHERE Competitie_Code = :code";
+                string query = "DELETE FROM COMPETITIE_TEAM WHERE COMPETITIE_CODE = :code";
                 command = new OracleCommand(query, conn);
                 command.Parameters.Add("code", OracleDbType.Varchar2).Value = compCode;
                 command.ExecuteNonQuery();
@@ -292,6 +303,124 @@ namespace Turven_FraGie
 
         #endregion
 
+        #region Vereniging
+        public bool MaakVereniging(string naam)
+        {
+            try
+            {
+                conn.Open();
+                string query = "INSERT INTO VERENIGING VALUES(:naam)";
+                command = new OracleCommand(query, conn);
+                command.Parameters.Add("naam", OracleDbType.Varchar2).Value = naam;
+                command.ExecuteNonQuery();
+                return true;
+            }
+            catch(Exception)
+            {
+                return false;
+            }
+            finally
+            {
+                conn.Close();
+            }
+        }
 
+        public bool WijsLocatieAanVereniging(string vNaam, string shNaam, string plaats, string postcode, string huisnummer)
+        {
+            try
+            {
+                command = new OracleCommand("WIJSLOCATIEAANVERENIGING", conn);
+                command.CommandType = CommandType.StoredProcedure;
+                command.Parameters.Add("P_V_NAAM", OracleDbType.Varchar2).Value = vNaam;
+                command.Parameters.Add("P_SP_NAAM", OracleDbType.Varchar2).Value = shNaam;
+                command.Parameters.Add("P_PLAATS", OracleDbType.Varchar2).Value = plaats;
+                command.Parameters.Add("P_POSTCODE", OracleDbType.Varchar2).Value = postcode;
+                command.Parameters.Add("P_HUISNUMMER", OracleDbType.Varchar2).Value = huisnummer;
+                
+                conn.Open();
+                OracleDataAdapter da = new OracleDataAdapter(command);
+                command.ExecuteNonQuery();
+                return true;
+            }
+            catch(Exception)
+            {
+                return false;
+            }
+            finally
+            {
+                conn.Close();
+            }
+        }
+
+        public bool WijzigVereniging(string vNaam, string oudVNaam, string shNaam, string plaats, string postcode, string huisnummer, int vID)
+        {
+            try
+            {
+                conn.Open();
+                string query = "UPDATE VERENIGING SET NAAM = :nNaam WHERE NAAM = :oNaam";
+                command = new OracleCommand(query, conn);
+                command.Parameters.Add("nNaam", OracleDbType.Varchar2).Value = vNaam;
+                command.Parameters.Add("oNaam", OracleDbType.Varchar2).Value = oudVNaam;
+                command.ExecuteNonQuery();
+                query = "UPDATE LOCATIE SET VERENIGING_NAAM = :vNaam, NAAM = :shNaam, PLAATS = :plaats," +
+                    "POSTCODE = :postcode, HUISNUMMER = :huisnummer WHERE ID = :id";
+                command = new OracleCommand(query, conn);
+                command.Parameters.Add("vNaam", OracleDbType.Varchar2).Value = vNaam;
+                command.Parameters.Add("shNaam", OracleDbType.Varchar2).Value = shNaam;
+                command.Parameters.Add("plaats", OracleDbType.Varchar2).Value = plaats;
+                command.Parameters.Add("postcode", OracleDbType.Varchar2).Value = postcode;
+                command.Parameters.Add("huisnummer", OracleDbType.Varchar2).Value = huisnummer;
+                command.Parameters.Add("id", OracleDbType.Int32).Value = vID;
+                command.ExecuteNonQuery();
+                return true;
+            }
+            catch(Exception)
+            {
+                return false;
+            }
+            finally
+            {
+                conn.Close();
+            }
+        }
+
+        public bool VerwijderVereniging(string vNaam)
+        {
+            try
+            {
+                conn.Open();
+                string query = "DELETE FROM TEAM_SPELER WHERE TEAM_ID IN ( SELECT ID FROM TEAM WHERE VERENIGING_NAAM = :vNaam)";
+                command = new OracleCommand(query, conn);
+                command.Parameters.Add("vNaam", OracleDbType.Varchar2).Value = vNaam;
+                command.ExecuteNonQuery();
+                query = "DELETE FROM TEAM WHERE VERENIGING_NAAM = :vNaam";
+                command = new OracleCommand(query, conn);
+                command.Parameters.Add("vNaam", OracleDbType.Varchar2).Value = vNaam;
+                command.ExecuteNonQuery();
+                query = "DELETE FROM LOCATIE WHERE VERENIGING_NAAM = :vNaam";
+                command = new OracleCommand(query, conn);
+                command.Parameters.Add("vNaam", OracleDbType.Varchar2).Value = vNaam;
+                command.ExecuteNonQuery();
+                query = "DELETE FROM ACCOUNT WHERE VERENIGING_NAAM = :vNaam";
+                command = new OracleCommand(query, conn);
+                command.Parameters.Add("vNaam", OracleDbType.Varchar2).Value = vNaam;
+                command.ExecuteNonQuery();
+                query = "DELETE FROM VERENIGING WHERE NAAM = :vNaam";
+                command = new OracleCommand(query, conn);
+                command.Parameters.Add("vNaam", OracleDbType.Varchar2).Value = vNaam;
+                command.ExecuteNonQuery();
+                return true;
+            }
+            catch(Exception)
+            {
+                return false;
+            }
+            finally
+            {
+                conn.Close();
+            }
+        }
+
+        #endregion
     }
 }

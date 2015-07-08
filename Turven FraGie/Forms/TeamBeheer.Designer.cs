@@ -55,11 +55,45 @@
             this.label1 = new System.Windows.Forms.Label();
             this.tbCompCode = new System.Windows.Forms.TextBox();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.gbWijzigVereniging = new System.Windows.Forms.GroupBox();
+            this.tbWVHuisNummer = new System.Windows.Forms.TextBox();
+            this.label16 = new System.Windows.Forms.Label();
+            this.label17 = new System.Windows.Forms.Label();
+            this.tbWVPostcode = new System.Windows.Forms.TextBox();
+            this.label18 = new System.Windows.Forms.Label();
+            this.tbWVPlaats = new System.Windows.Forms.TextBox();
+            this.label19 = new System.Windows.Forms.Label();
+            this.tbWVSporthalNaam = new System.Windows.Forms.TextBox();
+            this.label20 = new System.Windows.Forms.Label();
+            this.tbWVNaam = new System.Windows.Forms.TextBox();
+            this.btnVerwijderVereniging = new System.Windows.Forms.Button();
+            this.label15 = new System.Windows.Forms.Label();
+            this.tbZoekVNaam = new System.Windows.Forms.TextBox();
+            this.lbVerenigingen = new System.Windows.Forms.ListBox();
+            this.btnWijzigVereniging = new System.Windows.Forms.Button();
+            this.gbMaakVereniging = new System.Windows.Forms.GroupBox();
+            this.tbVerenigingHuisnummer = new System.Windows.Forms.TextBox();
+            this.label14 = new System.Windows.Forms.Label();
+            this.btnMaakVereniging = new System.Windows.Forms.Button();
+            this.label10 = new System.Windows.Forms.Label();
+            this.tbVerenigingPostcode = new System.Windows.Forms.TextBox();
+            this.label11 = new System.Windows.Forms.Label();
+            this.tbVerenigingPlaats = new System.Windows.Forms.TextBox();
+            this.label12 = new System.Windows.Forms.Label();
+            this.tbSporthalNaam = new System.Windows.Forms.TextBox();
             this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.btnTerug = new System.Windows.Forms.Button();
+            this.gbSelecteerVereniging = new System.Windows.Forms.GroupBox();
+            this.tbVerenigingNaam = new System.Windows.Forms.TextBox();
+            this.label13 = new System.Windows.Forms.Label();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox1.SuspendLayout();
+            this.tabPage2.SuspendLayout();
+            this.gbWijzigVereniging.SuspendLayout();
+            this.gbMaakVereniging.SuspendLayout();
+            this.gbSelecteerVereniging.SuspendLayout();
             this.SuspendLayout();
             // 
             // tabControl1
@@ -71,7 +105,7 @@
             this.tabControl1.Location = new System.Drawing.Point(0, 0);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(1774, 1033);
+            this.tabControl1.Size = new System.Drawing.Size(1774, 682);
             this.tabControl1.TabIndex = 0;
             // 
             // tabPage1
@@ -81,7 +115,7 @@
             this.tabPage1.Location = new System.Drawing.Point(4, 38);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(1766, 991);
+            this.tabPage1.Size = new System.Drawing.Size(1766, 640);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Competitie Beheer";
             this.tabPage1.UseVisualStyleBackColor = true;
@@ -325,29 +359,328 @@
             // 
             // tabPage2
             // 
+            this.tabPage2.Controls.Add(this.gbSelecteerVereniging);
+            this.tabPage2.Controls.Add(this.gbWijzigVereniging);
+            this.tabPage2.Controls.Add(this.gbMaakVereniging);
             this.tabPage2.Location = new System.Drawing.Point(4, 38);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(1766, 991);
+            this.tabPage2.Size = new System.Drawing.Size(1766, 640);
             this.tabPage2.TabIndex = 1;
-            this.tabPage2.Text = "tabPage2";
+            this.tabPage2.Text = "Vereniging Beheer";
             this.tabPage2.UseVisualStyleBackColor = true;
+            // 
+            // gbWijzigVereniging
+            // 
+            this.gbWijzigVereniging.Controls.Add(this.tbWVHuisNummer);
+            this.gbWijzigVereniging.Controls.Add(this.label16);
+            this.gbWijzigVereniging.Controls.Add(this.label17);
+            this.gbWijzigVereniging.Controls.Add(this.tbWVPostcode);
+            this.gbWijzigVereniging.Controls.Add(this.label18);
+            this.gbWijzigVereniging.Controls.Add(this.tbWVPlaats);
+            this.gbWijzigVereniging.Controls.Add(this.label19);
+            this.gbWijzigVereniging.Controls.Add(this.tbWVSporthalNaam);
+            this.gbWijzigVereniging.Controls.Add(this.label20);
+            this.gbWijzigVereniging.Controls.Add(this.tbWVNaam);
+            this.gbWijzigVereniging.Controls.Add(this.btnVerwijderVereniging);
+            this.gbWijzigVereniging.Controls.Add(this.btnWijzigVereniging);
+            this.gbWijzigVereniging.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.gbWijzigVereniging.Location = new System.Drawing.Point(1359, 23);
+            this.gbWijzigVereniging.Name = "gbWijzigVereniging";
+            this.gbWijzigVereniging.Size = new System.Drawing.Size(381, 586);
+            this.gbWijzigVereniging.TabIndex = 10;
+            this.gbWijzigVereniging.TabStop = false;
+            this.gbWijzigVereniging.Text = "Wijzig / Verwijder Vereniging";
+            // 
+            // tbWVHuisNummer
+            // 
+            this.tbWVHuisNummer.Location = new System.Drawing.Point(0, 370);
+            this.tbWVHuisNummer.Name = "tbWVHuisNummer";
+            this.tbWVHuisNummer.Size = new System.Drawing.Size(317, 36);
+            this.tbWVHuisNummer.TabIndex = 22;
+            // 
+            // label16
+            // 
+            this.label16.AutoSize = true;
+            this.label16.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label16.Location = new System.Drawing.Point(6, 342);
+            this.label16.Name = "label16";
+            this.label16.Size = new System.Drawing.Size(122, 25);
+            this.label16.TabIndex = 21;
+            this.label16.Text = "Huisnummer";
+            // 
+            // label17
+            // 
+            this.label17.AutoSize = true;
+            this.label17.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label17.Location = new System.Drawing.Point(6, 186);
+            this.label17.Name = "label17";
+            this.label17.Size = new System.Drawing.Size(66, 25);
+            this.label17.TabIndex = 20;
+            this.label17.Text = "Plaats";
+            // 
+            // tbWVPostcode
+            // 
+            this.tbWVPostcode.Location = new System.Drawing.Point(6, 289);
+            this.tbWVPostcode.Name = "tbWVPostcode";
+            this.tbWVPostcode.Size = new System.Drawing.Size(317, 36);
+            this.tbWVPostcode.TabIndex = 19;
+            // 
+            // label18
+            // 
+            this.label18.AutoSize = true;
+            this.label18.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label18.Location = new System.Drawing.Point(6, 261);
+            this.label18.Name = "label18";
+            this.label18.Size = new System.Drawing.Size(94, 25);
+            this.label18.TabIndex = 18;
+            this.label18.Text = "Postcode";
+            // 
+            // tbWVPlaats
+            // 
+            this.tbWVPlaats.Location = new System.Drawing.Point(6, 214);
+            this.tbWVPlaats.Name = "tbWVPlaats";
+            this.tbWVPlaats.Size = new System.Drawing.Size(317, 36);
+            this.tbWVPlaats.TabIndex = 17;
+            // 
+            // label19
+            // 
+            this.label19.AutoSize = true;
+            this.label19.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label19.Location = new System.Drawing.Point(6, 107);
+            this.label19.Name = "label19";
+            this.label19.Size = new System.Drawing.Size(142, 25);
+            this.label19.TabIndex = 16;
+            this.label19.Text = "Sporthal Naam";
+            // 
+            // tbWVSporthalNaam
+            // 
+            this.tbWVSporthalNaam.Location = new System.Drawing.Point(6, 143);
+            this.tbWVSporthalNaam.Name = "tbWVSporthalNaam";
+            this.tbWVSporthalNaam.Size = new System.Drawing.Size(317, 36);
+            this.tbWVSporthalNaam.TabIndex = 15;
+            // 
+            // label20
+            // 
+            this.label20.AutoSize = true;
+            this.label20.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label20.Location = new System.Drawing.Point(6, 32);
+            this.label20.Name = "label20";
+            this.label20.Size = new System.Drawing.Size(64, 25);
+            this.label20.TabIndex = 14;
+            this.label20.Text = "Naam";
+            // 
+            // tbWVNaam
+            // 
+            this.tbWVNaam.Location = new System.Drawing.Point(6, 68);
+            this.tbWVNaam.Name = "tbWVNaam";
+            this.tbWVNaam.Size = new System.Drawing.Size(317, 36);
+            this.tbWVNaam.TabIndex = 13;
+            // 
+            // btnVerwijderVereniging
+            // 
+            this.btnVerwijderVereniging.ForeColor = System.Drawing.Color.Red;
+            this.btnVerwijderVereniging.Location = new System.Drawing.Point(0, 506);
+            this.btnVerwijderVereniging.Name = "btnVerwijderVereniging";
+            this.btnVerwijderVereniging.Size = new System.Drawing.Size(226, 75);
+            this.btnVerwijderVereniging.TabIndex = 12;
+            this.btnVerwijderVereniging.Text = "Verwijder Vereniging";
+            this.btnVerwijderVereniging.UseVisualStyleBackColor = true;
+            this.btnVerwijderVereniging.Click += new System.EventHandler(this.btnVerwijderVereniging_Click);
+            // 
+            // label15
+            // 
+            this.label15.AutoSize = true;
+            this.label15.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label15.Location = new System.Drawing.Point(6, 32);
+            this.label15.Name = "label15";
+            this.label15.Size = new System.Drawing.Size(244, 25);
+            this.label15.TabIndex = 11;
+            this.label15.Text = "Zoek Vereniging Op Naam";
+            // 
+            // tbZoekVNaam
+            // 
+            this.tbZoekVNaam.Location = new System.Drawing.Point(5, 64);
+            this.tbZoekVNaam.Name = "tbZoekVNaam";
+            this.tbZoekVNaam.Size = new System.Drawing.Size(317, 36);
+            this.tbZoekVNaam.TabIndex = 10;
+            this.tbZoekVNaam.TextChanged += new System.EventHandler(this.tbZoekVNaam_TextChanged);
+            // 
+            // lbVerenigingen
+            // 
+            this.lbVerenigingen.FormattingEnabled = true;
+            this.lbVerenigingen.ItemHeight = 29;
+            this.lbVerenigingen.Location = new System.Drawing.Point(7, 127);
+            this.lbVerenigingen.Name = "lbVerenigingen";
+            this.lbVerenigingen.Size = new System.Drawing.Size(760, 265);
+            this.lbVerenigingen.TabIndex = 9;
+            this.lbVerenigingen.SelectedIndexChanged += new System.EventHandler(this.lbVerenigingen_SelectedIndexChanged);
+            // 
+            // btnWijzigVereniging
+            // 
+            this.btnWijzigVereniging.Location = new System.Drawing.Point(0, 425);
+            this.btnWijzigVereniging.Name = "btnWijzigVereniging";
+            this.btnWijzigVereniging.Size = new System.Drawing.Size(226, 75);
+            this.btnWijzigVereniging.TabIndex = 8;
+            this.btnWijzigVereniging.Text = "Wijzig Vereniging";
+            this.btnWijzigVereniging.UseVisualStyleBackColor = true;
+            this.btnWijzigVereniging.Click += new System.EventHandler(this.btnWijzigVereniging_Click);
+            // 
+            // gbMaakVereniging
+            // 
+            this.gbMaakVereniging.Controls.Add(this.tbVerenigingHuisnummer);
+            this.gbMaakVereniging.Controls.Add(this.label14);
+            this.gbMaakVereniging.Controls.Add(this.btnMaakVereniging);
+            this.gbMaakVereniging.Controls.Add(this.label10);
+            this.gbMaakVereniging.Controls.Add(this.tbVerenigingPostcode);
+            this.gbMaakVereniging.Controls.Add(this.label11);
+            this.gbMaakVereniging.Controls.Add(this.tbVerenigingPlaats);
+            this.gbMaakVereniging.Controls.Add(this.label12);
+            this.gbMaakVereniging.Controls.Add(this.tbSporthalNaam);
+            this.gbMaakVereniging.Controls.Add(this.label13);
+            this.gbMaakVereniging.Controls.Add(this.tbVerenigingNaam);
+            this.gbMaakVereniging.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.gbMaakVereniging.Location = new System.Drawing.Point(23, 23);
+            this.gbMaakVereniging.Name = "gbMaakVereniging";
+            this.gbMaakVereniging.Size = new System.Drawing.Size(387, 586);
+            this.gbMaakVereniging.TabIndex = 1;
+            this.gbMaakVereniging.TabStop = false;
+            this.gbMaakVereniging.Text = "Maak Vereniging";
+            // 
+            // tbVerenigingHuisnummer
+            // 
+            this.tbVerenigingHuisnummer.Location = new System.Drawing.Point(0, 370);
+            this.tbVerenigingHuisnummer.Name = "tbVerenigingHuisnummer";
+            this.tbVerenigingHuisnummer.Size = new System.Drawing.Size(317, 36);
+            this.tbVerenigingHuisnummer.TabIndex = 10;
+            // 
+            // label14
+            // 
+            this.label14.AutoSize = true;
+            this.label14.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label14.Location = new System.Drawing.Point(6, 342);
+            this.label14.Name = "label14";
+            this.label14.Size = new System.Drawing.Size(122, 25);
+            this.label14.TabIndex = 9;
+            this.label14.Text = "Huisnummer";
+            // 
+            // btnMaakVereniging
+            // 
+            this.btnMaakVereniging.Location = new System.Drawing.Point(6, 489);
+            this.btnMaakVereniging.Name = "btnMaakVereniging";
+            this.btnMaakVereniging.Size = new System.Drawing.Size(226, 91);
+            this.btnMaakVereniging.TabIndex = 8;
+            this.btnMaakVereniging.Text = "Maak Vereniging";
+            this.btnMaakVereniging.UseVisualStyleBackColor = true;
+            this.btnMaakVereniging.Click += new System.EventHandler(this.btnMaakVereniging_Click);
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label10.Location = new System.Drawing.Point(6, 186);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(66, 25);
+            this.label10.TabIndex = 7;
+            this.label10.Text = "Plaats";
+            // 
+            // tbVerenigingPostcode
+            // 
+            this.tbVerenigingPostcode.Location = new System.Drawing.Point(6, 289);
+            this.tbVerenigingPostcode.Name = "tbVerenigingPostcode";
+            this.tbVerenigingPostcode.Size = new System.Drawing.Size(317, 36);
+            this.tbVerenigingPostcode.TabIndex = 6;
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label11.Location = new System.Drawing.Point(6, 261);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(94, 25);
+            this.label11.TabIndex = 5;
+            this.label11.Text = "Postcode";
+            // 
+            // tbVerenigingPlaats
+            // 
+            this.tbVerenigingPlaats.Location = new System.Drawing.Point(6, 214);
+            this.tbVerenigingPlaats.Name = "tbVerenigingPlaats";
+            this.tbVerenigingPlaats.Size = new System.Drawing.Size(317, 36);
+            this.tbVerenigingPlaats.TabIndex = 4;
+            // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label12.Location = new System.Drawing.Point(6, 107);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(142, 25);
+            this.label12.TabIndex = 3;
+            this.label12.Text = "Sporthal Naam";
+            // 
+            // tbSporthalNaam
+            // 
+            this.tbSporthalNaam.Location = new System.Drawing.Point(6, 143);
+            this.tbSporthalNaam.Name = "tbSporthalNaam";
+            this.tbSporthalNaam.Size = new System.Drawing.Size(317, 36);
+            this.tbSporthalNaam.TabIndex = 2;
             // 
             // tabPage3
             // 
             this.tabPage3.Location = new System.Drawing.Point(4, 38);
             this.tabPage3.Name = "tabPage3";
             this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage3.Size = new System.Drawing.Size(1766, 991);
+            this.tabPage3.Size = new System.Drawing.Size(1766, 640);
             this.tabPage3.TabIndex = 2;
             this.tabPage3.Text = "tabPage3";
             this.tabPage3.UseVisualStyleBackColor = true;
+            // 
+            // btnTerug
+            // 
+            this.btnTerug.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnTerug.Location = new System.Drawing.Point(27, 744);
+            this.btnTerug.Name = "btnTerug";
+            this.btnTerug.Size = new System.Drawing.Size(216, 114);
+            this.btnTerug.TabIndex = 4;
+            this.btnTerug.Text = "Terug";
+            this.btnTerug.UseVisualStyleBackColor = true;
+            this.btnTerug.Click += new System.EventHandler(this.btnTerug_Click);
+            // 
+            // gbSelecteerVereniging
+            // 
+            this.gbSelecteerVereniging.Controls.Add(this.label15);
+            this.gbSelecteerVereniging.Controls.Add(this.tbZoekVNaam);
+            this.gbSelecteerVereniging.Controls.Add(this.lbVerenigingen);
+            this.gbSelecteerVereniging.Location = new System.Drawing.Point(439, 23);
+            this.gbSelecteerVereniging.Name = "gbSelecteerVereniging";
+            this.gbSelecteerVereniging.Size = new System.Drawing.Size(902, 586);
+            this.gbSelecteerVereniging.TabIndex = 23;
+            this.gbSelecteerVereniging.TabStop = false;
+            this.gbSelecteerVereniging.Text = "Selecteer Vereniging";
+            // 
+            // tbVerenigingNaam
+            // 
+            this.tbVerenigingNaam.Location = new System.Drawing.Point(6, 68);
+            this.tbVerenigingNaam.Name = "tbVerenigingNaam";
+            this.tbVerenigingNaam.Size = new System.Drawing.Size(317, 36);
+            this.tbVerenigingNaam.TabIndex = 0;
+            // 
+            // label13
+            // 
+            this.label13.AutoSize = true;
+            this.label13.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label13.Location = new System.Drawing.Point(6, 32);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(64, 25);
+            this.label13.TabIndex = 1;
+            this.label13.Text = "Naam";
             // 
             // TeamBeheer
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1914, 1045);
+            this.Controls.Add(this.btnTerug);
             this.Controls.Add(this.tabControl1);
             this.Name = "TeamBeheer";
             this.Text = "TeamBeheer";
@@ -357,6 +690,13 @@
             this.groupBox2.PerformLayout();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
+            this.tabPage2.ResumeLayout(false);
+            this.gbWijzigVereniging.ResumeLayout(false);
+            this.gbWijzigVereniging.PerformLayout();
+            this.gbMaakVereniging.ResumeLayout(false);
+            this.gbMaakVereniging.PerformLayout();
+            this.gbSelecteerVereniging.ResumeLayout(false);
+            this.gbSelecteerVereniging.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -391,5 +731,35 @@
         private System.Windows.Forms.TextBox tbCompNiveau;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox tbCompCode;
+        private System.Windows.Forms.Button btnTerug;
+        private System.Windows.Forms.GroupBox gbMaakVereniging;
+        private System.Windows.Forms.TextBox tbVerenigingHuisnummer;
+        private System.Windows.Forms.Label label14;
+        private System.Windows.Forms.Button btnMaakVereniging;
+        private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.TextBox tbVerenigingPostcode;
+        private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.TextBox tbVerenigingPlaats;
+        private System.Windows.Forms.Label label12;
+        private System.Windows.Forms.TextBox tbSporthalNaam;
+        private System.Windows.Forms.GroupBox gbWijzigVereniging;
+        private System.Windows.Forms.TextBox tbWVHuisNummer;
+        private System.Windows.Forms.Label label16;
+        private System.Windows.Forms.Label label17;
+        private System.Windows.Forms.TextBox tbWVPostcode;
+        private System.Windows.Forms.Label label18;
+        private System.Windows.Forms.TextBox tbWVPlaats;
+        private System.Windows.Forms.Label label19;
+        private System.Windows.Forms.TextBox tbWVSporthalNaam;
+        private System.Windows.Forms.Label label20;
+        private System.Windows.Forms.TextBox tbWVNaam;
+        private System.Windows.Forms.Button btnVerwijderVereniging;
+        private System.Windows.Forms.Label label15;
+        private System.Windows.Forms.TextBox tbZoekVNaam;
+        private System.Windows.Forms.ListBox lbVerenigingen;
+        private System.Windows.Forms.Button btnWijzigVereniging;
+        private System.Windows.Forms.GroupBox gbSelecteerVereniging;
+        private System.Windows.Forms.Label label13;
+        private System.Windows.Forms.TextBox tbVerenigingNaam;
     }
 }

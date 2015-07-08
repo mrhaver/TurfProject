@@ -73,6 +73,7 @@
     </Compile>
     <Compile Include="Klassen\Account.cs" />
     <Compile Include="Klassen\Competitie.cs" />
+    <Compile Include="Klassen\Locatie.cs" />
     <Compile Include="Klassen\Vereniging.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
