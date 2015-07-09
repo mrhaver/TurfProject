@@ -85,20 +85,33 @@
             this.label13 = new System.Windows.Forms.Label();
             this.tbVerenigingNaam = new System.Windows.Forms.TextBox();
             this.tabPage3 = new System.Windows.Forms.TabPage();
-            this.btnTerug = new System.Windows.Forms.Button();
+            this.gbMaakVerwijderTeam = new System.Windows.Forms.GroupBox();
+            this.btnWTeamCode = new System.Windows.Forms.Button();
+            this.tbWTeamCode = new System.Windows.Forms.TextBox();
+            this.label23 = new System.Windows.Forms.Label();
+            this.btnVerwijderTeam = new System.Windows.Forms.Button();
+            this.btnMaakTeam = new System.Windows.Forms.Button();
+            this.tbTeamCode = new System.Windows.Forms.TextBox();
+            this.lbTeams = new System.Windows.Forms.ListBox();
+            this.label22 = new System.Windows.Forms.Label();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.label21 = new System.Windows.Forms.Label();
             this.tbZoekVerenigingTeam = new System.Windows.Forms.TextBox();
             this.lbTeamVerenigingen = new System.Windows.Forms.ListBox();
-            this.label22 = new System.Windows.Forms.Label();
-            this.tbTeamCode = new System.Windows.Forms.TextBox();
-            this.btnMaakTeam = new System.Windows.Forms.Button();
-            this.lbTeams = new System.Windows.Forms.ListBox();
-            this.gbMaakVerwijderTeam = new System.Windows.Forms.GroupBox();
-            this.btnVerwijderTeam = new System.Windows.Forms.Button();
-            this.btnWTeamCode = new System.Windows.Forms.Button();
-            this.tbWTeamCode = new System.Windows.Forms.TextBox();
-            this.label23 = new System.Windows.Forms.Label();
+            this.tabPage4 = new System.Windows.Forms.TabPage();
+            this.groupBox5 = new System.Windows.Forms.GroupBox();
+            this.btnVoegTeamToe = new System.Windows.Forms.Button();
+            this.lbCTVTeams = new System.Windows.Forms.ListBox();
+            this.label27 = new System.Windows.Forms.Label();
+            this.tbCTZoekTeamVer = new System.Windows.Forms.TextBox();
+            this.groupBox4 = new System.Windows.Forms.GroupBox();
+            this.btnCTVerwijderTeam = new System.Windows.Forms.Button();
+            this.label25 = new System.Windows.Forms.Label();
+            this.lbCTTeams = new System.Windows.Forms.ListBox();
+            this.lbCTCompetities = new System.Windows.Forms.ListBox();
+            this.label24 = new System.Windows.Forms.Label();
+            this.tbCTZoekComp = new System.Windows.Forms.TextBox();
+            this.btnTerug = new System.Windows.Forms.Button();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -108,8 +121,11 @@
             this.gbWijzigVereniging.SuspendLayout();
             this.gbMaakVereniging.SuspendLayout();
             this.tabPage3.SuspendLayout();
-            this.groupBox3.SuspendLayout();
             this.gbMaakVerwijderTeam.SuspendLayout();
+            this.groupBox3.SuspendLayout();
+            this.tabPage4.SuspendLayout();
+            this.groupBox5.SuspendLayout();
+            this.groupBox4.SuspendLayout();
             this.SuspendLayout();
             // 
             // tabControl1
@@ -117,6 +133,7 @@
             this.tabControl1.Controls.Add(this.tabPage1);
             this.tabControl1.Controls.Add(this.tabPage2);
             this.tabControl1.Controls.Add(this.tabPage3);
+            this.tabControl1.Controls.Add(this.tabPage4);
             this.tabControl1.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.tabControl1.Location = new System.Drawing.Point(0, 0);
             this.tabControl1.Name = "tabControl1";
@@ -682,16 +699,94 @@
             this.tabPage3.Text = "Vereniging Teams";
             this.tabPage3.UseVisualStyleBackColor = true;
             // 
-            // btnTerug
+            // gbMaakVerwijderTeam
             // 
-            this.btnTerug.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnTerug.Location = new System.Drawing.Point(27, 744);
-            this.btnTerug.Name = "btnTerug";
-            this.btnTerug.Size = new System.Drawing.Size(216, 114);
-            this.btnTerug.TabIndex = 4;
-            this.btnTerug.Text = "Terug";
-            this.btnTerug.UseVisualStyleBackColor = true;
-            this.btnTerug.Click += new System.EventHandler(this.btnTerug_Click);
+            this.gbMaakVerwijderTeam.Controls.Add(this.btnWTeamCode);
+            this.gbMaakVerwijderTeam.Controls.Add(this.tbWTeamCode);
+            this.gbMaakVerwijderTeam.Controls.Add(this.label23);
+            this.gbMaakVerwijderTeam.Controls.Add(this.btnVerwijderTeam);
+            this.gbMaakVerwijderTeam.Controls.Add(this.btnMaakTeam);
+            this.gbMaakVerwijderTeam.Controls.Add(this.tbTeamCode);
+            this.gbMaakVerwijderTeam.Controls.Add(this.lbTeams);
+            this.gbMaakVerwijderTeam.Controls.Add(this.label22);
+            this.gbMaakVerwijderTeam.Location = new System.Drawing.Point(939, 20);
+            this.gbMaakVerwijderTeam.Name = "gbMaakVerwijderTeam";
+            this.gbMaakVerwijderTeam.Size = new System.Drawing.Size(780, 505);
+            this.gbMaakVerwijderTeam.TabIndex = 26;
+            this.gbMaakVerwijderTeam.TabStop = false;
+            this.gbMaakVerwijderTeam.Text = "Maak / Verwijder Team";
+            // 
+            // btnWTeamCode
+            // 
+            this.btnWTeamCode.Location = new System.Drawing.Point(275, 127);
+            this.btnWTeamCode.Name = "btnWTeamCode";
+            this.btnWTeamCode.Size = new System.Drawing.Size(226, 75);
+            this.btnWTeamCode.TabIndex = 16;
+            this.btnWTeamCode.Text = "Wijzig Team";
+            this.btnWTeamCode.UseVisualStyleBackColor = true;
+            this.btnWTeamCode.Click += new System.EventHandler(this.btnWTeamCode_Click);
+            // 
+            // tbWTeamCode
+            // 
+            this.tbWTeamCode.Location = new System.Drawing.Point(275, 79);
+            this.tbWTeamCode.Name = "tbWTeamCode";
+            this.tbWTeamCode.Size = new System.Drawing.Size(200, 36);
+            this.tbWTeamCode.TabIndex = 15;
+            // 
+            // label23
+            // 
+            this.label23.AutoSize = true;
+            this.label23.Location = new System.Drawing.Point(275, 46);
+            this.label23.Name = "label23";
+            this.label23.Size = new System.Drawing.Size(133, 29);
+            this.label23.TabIndex = 14;
+            this.label23.Text = "Teamcode";
+            // 
+            // btnVerwijderTeam
+            // 
+            this.btnVerwijderTeam.ForeColor = System.Drawing.Color.Red;
+            this.btnVerwijderTeam.Location = new System.Drawing.Point(6, 424);
+            this.btnVerwijderTeam.Name = "btnVerwijderTeam";
+            this.btnVerwijderTeam.Size = new System.Drawing.Size(226, 75);
+            this.btnVerwijderTeam.TabIndex = 13;
+            this.btnVerwijderTeam.Text = "Verwijder Team";
+            this.btnVerwijderTeam.UseVisualStyleBackColor = true;
+            this.btnVerwijderTeam.Click += new System.EventHandler(this.btnVerwijderTeam_Click);
+            // 
+            // btnMaakTeam
+            // 
+            this.btnMaakTeam.Location = new System.Drawing.Point(6, 127);
+            this.btnMaakTeam.Name = "btnMaakTeam";
+            this.btnMaakTeam.Size = new System.Drawing.Size(226, 75);
+            this.btnMaakTeam.TabIndex = 9;
+            this.btnMaakTeam.Text = "Maak Team";
+            this.btnMaakTeam.UseVisualStyleBackColor = true;
+            this.btnMaakTeam.Click += new System.EventHandler(this.btnMaakTeam_Click);
+            // 
+            // tbTeamCode
+            // 
+            this.tbTeamCode.Location = new System.Drawing.Point(6, 79);
+            this.tbTeamCode.Name = "tbTeamCode";
+            this.tbTeamCode.Size = new System.Drawing.Size(200, 36);
+            this.tbTeamCode.TabIndex = 1;
+            // 
+            // lbTeams
+            // 
+            this.lbTeams.FormattingEnabled = true;
+            this.lbTeams.ItemHeight = 29;
+            this.lbTeams.Location = new System.Drawing.Point(6, 217);
+            this.lbTeams.Name = "lbTeams";
+            this.lbTeams.Size = new System.Drawing.Size(519, 178);
+            this.lbTeams.TabIndex = 12;
+            // 
+            // label22
+            // 
+            this.label22.AutoSize = true;
+            this.label22.Location = new System.Drawing.Point(6, 46);
+            this.label22.Name = "label22";
+            this.label22.Size = new System.Drawing.Size(133, 29);
+            this.label22.TabIndex = 0;
+            this.label22.Text = "Teamcode";
             // 
             // groupBox3
             // 
@@ -733,94 +828,149 @@
             this.lbTeamVerenigingen.TabIndex = 9;
             this.lbTeamVerenigingen.SelectedIndexChanged += new System.EventHandler(this.lbTeamVerenigingen_SelectedIndexChanged);
             // 
-            // label22
+            // tabPage4
             // 
-            this.label22.AutoSize = true;
-            this.label22.Location = new System.Drawing.Point(6, 46);
-            this.label22.Name = "label22";
-            this.label22.Size = new System.Drawing.Size(133, 29);
-            this.label22.TabIndex = 0;
-            this.label22.Text = "Teamcode";
+            this.tabPage4.Controls.Add(this.groupBox5);
+            this.tabPage4.Controls.Add(this.groupBox4);
+            this.tabPage4.Location = new System.Drawing.Point(4, 38);
+            this.tabPage4.Name = "tabPage4";
+            this.tabPage4.Size = new System.Drawing.Size(1766, 640);
+            this.tabPage4.TabIndex = 3;
+            this.tabPage4.Text = "Competitie Teams";
+            this.tabPage4.UseVisualStyleBackColor = true;
             // 
-            // tbTeamCode
+            // groupBox5
             // 
-            this.tbTeamCode.Location = new System.Drawing.Point(6, 79);
-            this.tbTeamCode.Name = "tbTeamCode";
-            this.tbTeamCode.Size = new System.Drawing.Size(200, 36);
-            this.tbTeamCode.TabIndex = 1;
+            this.groupBox5.Controls.Add(this.btnVoegTeamToe);
+            this.groupBox5.Controls.Add(this.lbCTVTeams);
+            this.groupBox5.Controls.Add(this.label27);
+            this.groupBox5.Controls.Add(this.tbCTZoekTeamVer);
+            this.groupBox5.Location = new System.Drawing.Point(965, 15);
+            this.groupBox5.Name = "groupBox5";
+            this.groupBox5.Size = new System.Drawing.Size(788, 598);
+            this.groupBox5.TabIndex = 17;
+            this.groupBox5.TabStop = false;
+            this.groupBox5.Text = "Voeg Team Toe";
             // 
-            // btnMaakTeam
+            // btnVoegTeamToe
             // 
-            this.btnMaakTeam.Location = new System.Drawing.Point(6, 127);
-            this.btnMaakTeam.Name = "btnMaakTeam";
-            this.btnMaakTeam.Size = new System.Drawing.Size(226, 75);
-            this.btnMaakTeam.TabIndex = 9;
-            this.btnMaakTeam.Text = "Maak Team";
-            this.btnMaakTeam.UseVisualStyleBackColor = true;
-            this.btnMaakTeam.Click += new System.EventHandler(this.btnMaakTeam_Click);
+            this.btnVoegTeamToe.Location = new System.Drawing.Point(6, 310);
+            this.btnVoegTeamToe.Name = "btnVoegTeamToe";
+            this.btnVoegTeamToe.Size = new System.Drawing.Size(226, 75);
+            this.btnVoegTeamToe.TabIndex = 15;
+            this.btnVoegTeamToe.Text = "Voeg Team Toe";
+            this.btnVoegTeamToe.UseVisualStyleBackColor = true;
+            this.btnVoegTeamToe.Click += new System.EventHandler(this.btnVoegTeamToe_Click);
             // 
-            // lbTeams
+            // lbCTVTeams
             // 
-            this.lbTeams.FormattingEnabled = true;
-            this.lbTeams.ItemHeight = 29;
-            this.lbTeams.Location = new System.Drawing.Point(6, 217);
-            this.lbTeams.Name = "lbTeams";
-            this.lbTeams.Size = new System.Drawing.Size(519, 178);
-            this.lbTeams.TabIndex = 12;
+            this.lbCTVTeams.FormattingEnabled = true;
+            this.lbCTVTeams.ItemHeight = 29;
+            this.lbCTVTeams.Location = new System.Drawing.Point(4, 115);
+            this.lbCTVTeams.Name = "lbCTVTeams";
+            this.lbCTVTeams.Size = new System.Drawing.Size(760, 178);
+            this.lbCTVTeams.TabIndex = 12;
             // 
-            // gbMaakVerwijderTeam
+            // label27
             // 
-            this.gbMaakVerwijderTeam.Controls.Add(this.btnWTeamCode);
-            this.gbMaakVerwijderTeam.Controls.Add(this.tbWTeamCode);
-            this.gbMaakVerwijderTeam.Controls.Add(this.label23);
-            this.gbMaakVerwijderTeam.Controls.Add(this.btnVerwijderTeam);
-            this.gbMaakVerwijderTeam.Controls.Add(this.btnMaakTeam);
-            this.gbMaakVerwijderTeam.Controls.Add(this.tbTeamCode);
-            this.gbMaakVerwijderTeam.Controls.Add(this.lbTeams);
-            this.gbMaakVerwijderTeam.Controls.Add(this.label22);
-            this.gbMaakVerwijderTeam.Location = new System.Drawing.Point(939, 20);
-            this.gbMaakVerwijderTeam.Name = "gbMaakVerwijderTeam";
-            this.gbMaakVerwijderTeam.Size = new System.Drawing.Size(780, 505);
-            this.gbMaakVerwijderTeam.TabIndex = 26;
-            this.gbMaakVerwijderTeam.TabStop = false;
-            this.gbMaakVerwijderTeam.Text = "Maak / Verwijder Team";
+            this.label27.AutoSize = true;
+            this.label27.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label27.Location = new System.Drawing.Point(5, 41);
+            this.label27.Name = "label27";
+            this.label27.Size = new System.Drawing.Size(243, 25);
+            this.label27.TabIndex = 14;
+            this.label27.Text = "Zoek Team Op Vereniging";
             // 
-            // btnVerwijderTeam
+            // tbCTZoekTeamVer
             // 
-            this.btnVerwijderTeam.ForeColor = System.Drawing.Color.Red;
-            this.btnVerwijderTeam.Location = new System.Drawing.Point(6, 424);
-            this.btnVerwijderTeam.Name = "btnVerwijderTeam";
-            this.btnVerwijderTeam.Size = new System.Drawing.Size(226, 75);
-            this.btnVerwijderTeam.TabIndex = 13;
-            this.btnVerwijderTeam.Text = "Verwijder Team";
-            this.btnVerwijderTeam.UseVisualStyleBackColor = true;
-            this.btnVerwijderTeam.Click += new System.EventHandler(this.btnVerwijderTeam_Click);
+            this.tbCTZoekTeamVer.Location = new System.Drawing.Point(4, 73);
+            this.tbCTZoekTeamVer.Name = "tbCTZoekTeamVer";
+            this.tbCTZoekTeamVer.Size = new System.Drawing.Size(317, 36);
+            this.tbCTZoekTeamVer.TabIndex = 13;
+            this.tbCTZoekTeamVer.TextChanged += new System.EventHandler(this.tbCTZoekTeamVer_TextChanged);
             // 
-            // btnWTeamCode
+            // groupBox4
             // 
-            this.btnWTeamCode.Location = new System.Drawing.Point(275, 127);
-            this.btnWTeamCode.Name = "btnWTeamCode";
-            this.btnWTeamCode.Size = new System.Drawing.Size(226, 75);
-            this.btnWTeamCode.TabIndex = 16;
-            this.btnWTeamCode.Text = "Wijzig Team";
-            this.btnWTeamCode.UseVisualStyleBackColor = true;
-            this.btnWTeamCode.Click += new System.EventHandler(this.btnWTeamCode_Click);
+            this.groupBox4.Controls.Add(this.btnCTVerwijderTeam);
+            this.groupBox4.Controls.Add(this.label25);
+            this.groupBox4.Controls.Add(this.lbCTTeams);
+            this.groupBox4.Controls.Add(this.lbCTCompetities);
+            this.groupBox4.Controls.Add(this.label24);
+            this.groupBox4.Controls.Add(this.tbCTZoekComp);
+            this.groupBox4.Location = new System.Drawing.Point(9, 15);
+            this.groupBox4.Name = "groupBox4";
+            this.groupBox4.Size = new System.Drawing.Size(788, 598);
+            this.groupBox4.TabIndex = 15;
+            this.groupBox4.TabStop = false;
+            this.groupBox4.Text = "Selecteer Competitie";
             // 
-            // tbWTeamCode
+            // btnCTVerwijderTeam
             // 
-            this.tbWTeamCode.Location = new System.Drawing.Point(275, 79);
-            this.tbWTeamCode.Name = "tbWTeamCode";
-            this.tbWTeamCode.Size = new System.Drawing.Size(200, 36);
-            this.tbWTeamCode.TabIndex = 15;
+            this.btnCTVerwijderTeam.ForeColor = System.Drawing.Color.Red;
+            this.btnCTVerwijderTeam.Location = new System.Drawing.Point(4, 517);
+            this.btnCTVerwijderTeam.Name = "btnCTVerwijderTeam";
+            this.btnCTVerwijderTeam.Size = new System.Drawing.Size(226, 75);
+            this.btnCTVerwijderTeam.TabIndex = 18;
+            this.btnCTVerwijderTeam.Text = "Verwijder Team";
+            this.btnCTVerwijderTeam.UseVisualStyleBackColor = true;
+            this.btnCTVerwijderTeam.Click += new System.EventHandler(this.btnCTVerwijderTeam_Click);
             // 
-            // label23
+            // label25
             // 
-            this.label23.AutoSize = true;
-            this.label23.Location = new System.Drawing.Point(275, 46);
-            this.label23.Name = "label23";
-            this.label23.Size = new System.Drawing.Size(133, 29);
-            this.label23.TabIndex = 14;
-            this.label23.Text = "Teamcode";
+            this.label25.AutoSize = true;
+            this.label25.Location = new System.Drawing.Point(7, 301);
+            this.label25.Name = "label25";
+            this.label25.Size = new System.Drawing.Size(91, 29);
+            this.label25.TabIndex = 16;
+            this.label25.Text = "Teams";
+            // 
+            // lbCTTeams
+            // 
+            this.lbCTTeams.FormattingEnabled = true;
+            this.lbCTTeams.ItemHeight = 29;
+            this.lbCTTeams.Location = new System.Drawing.Point(4, 333);
+            this.lbCTTeams.Name = "lbCTTeams";
+            this.lbCTTeams.Size = new System.Drawing.Size(760, 178);
+            this.lbCTTeams.TabIndex = 15;
+            // 
+            // lbCTCompetities
+            // 
+            this.lbCTCompetities.FormattingEnabled = true;
+            this.lbCTCompetities.ItemHeight = 29;
+            this.lbCTCompetities.Location = new System.Drawing.Point(4, 115);
+            this.lbCTCompetities.Name = "lbCTCompetities";
+            this.lbCTCompetities.Size = new System.Drawing.Size(760, 178);
+            this.lbCTCompetities.TabIndex = 12;
+            this.lbCTCompetities.SelectedIndexChanged += new System.EventHandler(this.lbCTCompetities_SelectedIndexChanged);
+            // 
+            // label24
+            // 
+            this.label24.AutoSize = true;
+            this.label24.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label24.Location = new System.Drawing.Point(5, 41);
+            this.label24.Name = "label24";
+            this.label24.Size = new System.Drawing.Size(241, 25);
+            this.label24.TabIndex = 14;
+            this.label24.Text = "Zoek Competitie Op Poule";
+            // 
+            // tbCTZoekComp
+            // 
+            this.tbCTZoekComp.Location = new System.Drawing.Point(4, 73);
+            this.tbCTZoekComp.Name = "tbCTZoekComp";
+            this.tbCTZoekComp.Size = new System.Drawing.Size(317, 36);
+            this.tbCTZoekComp.TabIndex = 13;
+            this.tbCTZoekComp.TextChanged += new System.EventHandler(this.tbCTZoekComp_TextChanged);
+            // 
+            // btnTerug
+            // 
+            this.btnTerug.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnTerug.Location = new System.Drawing.Point(27, 744);
+            this.btnTerug.Name = "btnTerug";
+            this.btnTerug.Size = new System.Drawing.Size(216, 114);
+            this.btnTerug.TabIndex = 4;
+            this.btnTerug.Text = "Terug";
+            this.btnTerug.UseVisualStyleBackColor = true;
+            this.btnTerug.Click += new System.EventHandler(this.btnTerug_Click);
             // 
             // TeamBeheer
             // 
@@ -845,10 +995,15 @@
             this.gbMaakVereniging.ResumeLayout(false);
             this.gbMaakVereniging.PerformLayout();
             this.tabPage3.ResumeLayout(false);
-            this.groupBox3.ResumeLayout(false);
-            this.groupBox3.PerformLayout();
             this.gbMaakVerwijderTeam.ResumeLayout(false);
             this.gbMaakVerwijderTeam.PerformLayout();
+            this.groupBox3.ResumeLayout(false);
+            this.groupBox3.PerformLayout();
+            this.tabPage4.ResumeLayout(false);
+            this.groupBox5.ResumeLayout(false);
+            this.groupBox5.PerformLayout();
+            this.groupBox4.ResumeLayout(false);
+            this.groupBox4.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -926,5 +1081,18 @@
         private System.Windows.Forms.Button btnWTeamCode;
         private System.Windows.Forms.TextBox tbWTeamCode;
         private System.Windows.Forms.Label label23;
+        private System.Windows.Forms.TabPage tabPage4;
+        private System.Windows.Forms.GroupBox groupBox5;
+        private System.Windows.Forms.Button btnVoegTeamToe;
+        private System.Windows.Forms.ListBox lbCTVTeams;
+        private System.Windows.Forms.Label label27;
+        private System.Windows.Forms.TextBox tbCTZoekTeamVer;
+        private System.Windows.Forms.GroupBox groupBox4;
+        private System.Windows.Forms.Button btnCTVerwijderTeam;
+        private System.Windows.Forms.Label label25;
+        private System.Windows.Forms.ListBox lbCTTeams;
+        private System.Windows.Forms.ListBox lbCTCompetities;
+        private System.Windows.Forms.Label label24;
+        private System.Windows.Forms.TextBox tbCTZoekComp;
     }
 }

@@ -284,5 +284,32 @@ namespace Turven_FraGie.Database_en_Administratie
         }
         
         #endregion
+        #region Competitie Teams
+
+        public bool WijsTeamAanCompetitie(int teamID, string compCode)
+        {
+            if (!databaseKoppeling.WijsTeamAanCompetitie(teamID, compCode))
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+        }
+        
+        public bool VerwijderTeamUitCompetitie(int teamID, string compCode)
+        {
+            if(!databaseKoppeling.VerwijderTeamUitCompetitie(teamID, compCode))
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+        }
+
+        #endregion
     }
 }

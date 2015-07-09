@@ -153,11 +153,38 @@ namespace Turven_FraGie
                     tempCompetities.Add(new Competitie(Convert.ToString(dataReader["CODE"]), Convert.ToString(dataReader["NIVEAU"]), Convert.ToString(dataReader["POULE"]),
                         Convert.ToString(dataReader["REGIO"])));
                 }
-                return tempCompetities;
+                
             }
             catch
             {
+                
+            }
+            finally
+            {
+                conn.Close();
+            }
+
+            try
+            {
+                conn.Open();
+                string query = "SELECT COMPETITIE_CODE, VERENIGING_NAAM, TEAMCODE, t.ID, ct.TEAM_ID  FROM TEAM t, COMPETITIE_TEAM ct WHERE t.ID = ct.TEAM_ID";
+                command = new OracleCommand(query, conn);
+                OracleDataReader dataReader = command.ExecuteReader();
+                while(dataReader.Read())
+                {
+                    foreach(Competitie c in tempCompetities)
+                    {
+                        if(c.Code == Convert.ToString(dataReader["COMPETITIE_CODE"]))
+                        {
+                            c.Teams.Add(new Team(Convert.ToString(dataReader["VERENIGING_NAAM"]), Convert.ToString(dataReader["TEAMCODE"]), Convert.ToInt32(dataReader["ID"])));
+                        }
+                    }
+                }
                 return tempCompetities;
+            }
+            catch(Exception)
+            {
+                return null;
             }
             finally
             {
@@ -506,6 +533,53 @@ namespace Turven_FraGie
                 query = "DELETE FROM TEAM_SPELER WHERE TEAM_ID = :id";
                 command = new OracleCommand(query, conn);
                 command.Parameters.Add("id", OracleDbType.Int32).Value = id;
+                command.ExecuteNonQuery();
+                return true;
+            }
+            catch(Exception)
+            {
+                return false;
+            }
+            finally
+            {
+                conn.Close();
+            }
+        }
+
+        #endregion
+
+        #region Competitie Teams
+        public bool WijsTeamAanCompetitie(int teamID, string compCode)
+        {
+            try
+            {
+                command = new OracleCommand("WIJSTEAMAANCOMP", conn);
+                command.CommandType = CommandType.StoredProcedure;
+                command.Parameters.Add("P_COMP_CODE", OracleDbType.Varchar2).Value = compCode;
+                command.Parameters.Add("P_TEAM_ID", OracleDbType.Int32).Value = teamID;
+                conn.Open();
+                command.ExecuteNonQuery();
+                return true;
+            }
+            catch(Exception)
+            {
+                return false;
+            }
+            finally
+            {
+                conn.Close();
+            }
+        }
+
+        public bool VerwijderTeamUitCompetitie(int teamID, string compCode)
+        {
+            try
+            {
+                conn.Open();
+                string query = "DELETE FROM COMPETITIE_TEAM WHERE TEAM_ID = :team_id AND COMPETITIE_CODE = :compCode";
+                command = new OracleCommand(query, conn);
+                command.Parameters.Add("team_id", OracleDbType.Int32).Value = teamID;
+                command.Parameters.Add("compCode", OracleDbType.Varchar2).Value = compCode;
                 command.ExecuteNonQuery();
                 return true;
             }

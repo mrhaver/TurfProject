@@ -230,9 +230,9 @@
             this.lbVerenigingen.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lbVerenigingen.FormattingEnabled = true;
             this.lbVerenigingen.ItemHeight = 29;
-            this.lbVerenigingen.Location = new System.Drawing.Point(121, 90);
+            this.lbVerenigingen.Location = new System.Drawing.Point(6, 90);
             this.lbVerenigingen.Name = "lbVerenigingen";
-            this.lbVerenigingen.Size = new System.Drawing.Size(450, 149);
+            this.lbVerenigingen.Size = new System.Drawing.Size(661, 149);
             this.lbVerenigingen.TabIndex = 18;
             this.lbVerenigingen.SelectedIndexChanged += new System.EventHandler(this.lbVerenigingen_SelectedIndexChanged_1);
             // 

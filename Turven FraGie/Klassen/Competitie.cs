@@ -12,6 +12,7 @@ namespace Turven_FraGie.Klassen
         private string niveau;
         private string poule;
         private string regio;
+        private List<Team> teams;
 
         public string Code
         {
@@ -33,12 +34,19 @@ namespace Turven_FraGie.Klassen
             get { return regio; }
         }
 
+        public List<Team> Teams
+        {
+            get { return teams; }
+            set { teams = value; }
+        }
+
         public Competitie(string code, string niveau, string poule, string regio)
         {
             this.code = code;
             this.niveau = niveau;
             this.poule = poule;
             this.regio = regio;
+            teams = new List<Team>();
         }
 
         public override string ToString()
