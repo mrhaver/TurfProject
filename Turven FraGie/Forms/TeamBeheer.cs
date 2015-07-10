@@ -27,10 +27,15 @@ namespace Turven_FraGie.Forms
             VulCompetities(lbCTCompetities);
             VulVerenigingen(lbVerenigingen);
             VulVerenigingen(lbTeamVerenigingen);
+            VulVerenigingen(lbSBVereniging);
             VulTeams(lbTeams);
             VulTeamsComp(lbCTTeams);
+            VulTeamsVer(cbSBMaakTeam, lbSBVereniging);
+            VulTeamsVer(cbSBWSpeler, lbSBVereniging);
             VulAlleTeamsVer(lbCTVTeams);
-            VulAlleSpelers(lbSBSpelers);
+            VulAlleSpelers(lbSBSpelers, lbSBVereniging);
+            StandaardCombobox(cbSBMaakTeam);
+            StandaardCombobox(cbSBFavPos);
         }
 
         #region Event Handlers
@@ -185,6 +190,7 @@ namespace Turven_FraGie.Forms
             }
             VulVerenigingen(lbVerenigingen);
             VulVerenigingen(lbTeamVerenigingen);
+            VulVerenigingen(lbSBVereniging);
         }
 
         private void tbZoekVNaam_TextChanged(object sender, EventArgs e)
@@ -207,7 +213,6 @@ namespace Turven_FraGie.Forms
             else
             {
                 VulVerenigingen(lbVerenigingen);
-                VulVerenigingen(lbTeamVerenigingen);
             }
         }
 
@@ -227,6 +232,7 @@ namespace Turven_FraGie.Forms
                 }
                 VulVerenigingen(lbVerenigingen);
                 VulVerenigingen(lbTeamVerenigingen);
+                VulVerenigingen(lbSBVereniging);
             }
             else
             {
@@ -264,6 +270,7 @@ namespace Turven_FraGie.Forms
                 }
                 VulVerenigingen(lbVerenigingen);
                 VulVerenigingen(lbTeamVerenigingen);
+                VulVerenigingen(lbSBVereniging);
             }
             else if (dialogResult == DialogResult.No)
             {
@@ -473,16 +480,27 @@ namespace Turven_FraGie.Forms
         #region Speler
         private void btnMaakSpeler_Click(object sender, EventArgs e)
         {
-            if (tbVoornaam.Text != "" && tbAchternaam.Text != "" && tbRugnummer.Text != "" && tbFavorietePos.Text != "")
+            if (tbVoornaam.Text != "" && tbAchternaam.Text != "" && tbRugnummer.Text != "" && cbSBFavPos.SelectedItem.ToString() != "" && lbSBVereniging.SelectedItem != null &&
+                cbSBFavPos.SelectedItem.ToString() != "Maak uw keuze" && cbSBMaakTeam.SelectedItem != null && cbSBMaakTeam.SelectedItem.ToString() != "Maak uw keuze")
             {
-                if (!administratie.MaakSpeler(tbVoornaam.Text, tbAchternaam.Text, Convert.ToInt32(tbRugnummer.Text), tbFavorietePos.Text))
+                string error = "";
+                Vereniging vereniging = (Vereniging)lbSBVereniging.SelectedItem;
+                Team team = administratie.GeefTeamVer(vereniging.Naam, cbSBMaakTeam.SelectedItem.ToString());
+                if (!administratie.MaakSpeler(tbVoornaam.Text, tbAchternaam.Text, Convert.ToInt32(tbRugnummer.Text), cbSBFavPos.SelectedItem.ToString(), vereniging.Naam, team.ID, out error))
                 {
-                    MessageBox.Show("Fout in de database");
+                    MessageBox.Show(error);
                 }
                 else
                 {
                     MessageBox.Show("Speler Aangemaakt");
-                    VulAlleSpelers(lbSBSpelers);
+                    tbVoornaam.Text = "";
+                    tbAchternaam.Text = "";
+                    tbRugnummer.Text = "";
+                    cbSBFavPos.Items.Clear();
+                    cbSBFavPos.Items.Add("Maak uw keuze");
+                    cbSBFavPos.SelectedIndex = 0;
+                    
+                    VulAlleSpelers(lbSBSpelers, lbSBVereniging);
                 }
             }
             else
@@ -493,38 +511,73 @@ namespace Turven_FraGie.Forms
 
         private void tbSBZoekSpeler_TextChanged(object sender, EventArgs e)
         {
+            StandaardCombobox(cbSBFavPos);
+            StandaardCombobox(cbSBMaakTeam);
             lbSBSpelers.Items.Clear();
             if (tbSBZoekSpeler.Text != "")
             {
                 string vVoornaam;
                 string vAchternaam;
                 string vZoekNaam = tbSBZoekSpeler.Text.ToUpper();
-                foreach (Speler s in administratie.Spelers)
+                foreach(Vereniging v in administratie.Verenigingen)
                 {
-                    vVoornaam = s.Voornaam.ToUpper();
-                    vAchternaam = s.Achternaam.ToUpper();
-                    if (vVoornaam.Contains(vZoekNaam) || vAchternaam.Contains(vZoekNaam))
+                    Vereniging vereniging = (Vereniging)lbSBVereniging.SelectedItem;
+                    if(v.Naam == vereniging.Naam)
                     {
-                        lbSBSpelers.Items.Add(s);
-                        lbSBSpelers.SelectedIndex = 0;
+                        foreach (Speler s in v.Spelers)
+                        {
+                            vVoornaam = s.Voornaam.ToUpper();
+                            vAchternaam = s.Achternaam.ToUpper();
+                            if (vVoornaam.Contains(vZoekNaam) || vAchternaam.Contains(vZoekNaam))
+                            {
+                                lbSBSpelers.Items.Add(s);
+                                lbSBSpelers.SelectedIndex = 0;
+                            }
+                        }
                     }
                 }
+                
             }
             else
             {
-                VulAlleSpelers(lbSBSpelers);
+                VulAlleSpelers(lbSBSpelers, lbSBVereniging);
             }
         }
 
         private void lbSBSpelers_SelectedIndexChanged(object sender, EventArgs e)
         {
+            StandaardCombobox(cbSBMaakTeam);
+            StandaardCombobox(cbSBFavPos);
             if (lbSBSpelers.SelectedItem != null)
             {
+                VulPosities(cbSBWFavPos);
                 Speler speler = (Speler)lbSBSpelers.SelectedItem;
                 tbWSpelerVoornaam.Text = speler.Voornaam;
                 tbWSpelerAchternaam.Text = speler.Achternaam;
                 tbWSpelerRugnummer.Text = Convert.ToString(speler.Rugnummer);
-                tbWSpelerFavPos.Text = speler.EerstePositie();
+                cbSBWFavPos.SelectedItem = speler.EerstePositie();
+                if (lbSBSpelers.SelectedItem != null)
+                {
+                    Speler gekozenSpeler = (Speler)lbSBSpelers.SelectedItem;
+                    Team team = gekozenSpeler.EersteTeam();
+                    cbSBWSpeler.SelectedItem = team.TeamCode;
+                }
+                else
+                {
+                    tbWSpelerVoornaam.Text = "";
+                    tbWSpelerAchternaam.Text = "";
+                    tbWSpelerRugnummer.Text = "";
+                    cbSBWFavPos.Items.Clear();
+                    cbSBWSpeler.Items.Clear();
+                }
+            }
+            else
+            {
+                tbWSpelerVoornaam.Text = "";
+                tbWSpelerAchternaam.Text = "";
+                tbWSpelerRugnummer.Text = "";
+                cbSBWFavPos.SelectedIndex = 0;
+                cbSBWSpeler.Items.Clear();
             }
         }
 
@@ -534,14 +587,17 @@ namespace Turven_FraGie.Forms
             if (lbSBSpelers.SelectedItem != null)
             {
                 Speler speler = (Speler)lbSBSpelers.SelectedItem;
-                if (!administratie.WijzigSpeler(speler.ID, speler.Voornaam, speler.Achternaam, speler.Rugnummer, speler.EerstePositie(), out error))
+                Vereniging vereniging = (Vereniging)lbSBVereniging.SelectedItem;
+                Team team = administratie.GeefTeamVer(vereniging.Naam, cbSBWSpeler.SelectedItem.ToString());
+                if (!administratie.WijzigSpeler(speler.ID, tbWSpelerVoornaam.Text, tbWSpelerAchternaam.Text, Convert.ToInt32(tbWSpelerRugnummer.Text), cbSBWFavPos.SelectedItem.ToString(), vereniging.Naam, team.ID, speler.Rugnummer,
+                    speler.EersteTeam().ID, out error))
                 {
                     MessageBox.Show(error);
                 }
                 else
                 {
                     MessageBox.Show("Speler Gewijzigd");
-                    VulAlleSpelers(lbSBSpelers);
+                    VulAlleSpelers(lbSBSpelers, lbSBVereniging);
                 }
             }
 
@@ -561,11 +617,75 @@ namespace Turven_FraGie.Forms
                     tbWSpelerVoornaam.Text = "";
                     tbWSpelerAchternaam.Text = "";
                     tbWSpelerRugnummer.Text = "";
-                    tbWSpelerFavPos.Text = "";
+                    cbSBWFavPos.SelectedIndex = 0;
                     MessageBox.Show("Speler verwijderd");
-                    VulAlleSpelers(lbSBSpelers);
+                    VulAlleSpelers(lbSBSpelers, lbSBVereniging);
                 }
             }
+        }
+
+        private void tbSBZoekVereniging_TextChanged(object sender, EventArgs e)
+        {
+            StandaardCombobox(cbSBFavPos);
+            StandaardCombobox(cbSBMaakTeam);
+            lbSBVereniging.Items.Clear();
+            if (tbSBZoekVereniging.Text != "")
+            {
+                string vNaam;
+                string vZoekNaam = tbSBZoekVereniging.Text.ToUpper();
+                foreach (Vereniging v in administratie.Verenigingen)
+                {
+                    vNaam = v.Naam.ToUpper();
+                    if (vNaam.Contains(vZoekNaam))
+                    {
+                        lbSBVereniging.Items.Add(v);
+                        lbSBVereniging.SelectedIndex = 0;
+                    }
+                }
+            }
+            else
+            {
+                VulVerenigingen(lbSBVereniging);
+            }
+        }
+
+        private void lbSBVereniging_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            StandaardCombobox(cbSBFavPos);
+            StandaardCombobox(cbSBMaakTeam);
+            if (lbSBVereniging.SelectedItem != null)
+            {
+                Vereniging vereniging = (Vereniging)lbSBVereniging.SelectedItem;
+                gbMaakSpeler.Text = "Maak Speler voor\n" + vereniging.Naam;
+                VulTeamsVer(cbSBWSpeler, lbSBVereniging);
+                VulAlleSpelers(lbSBSpelers, lbSBVereniging);
+                // selecteer het juiste team uit alle teams van die vereniging
+                if (lbSBSpelers.SelectedItem != null)
+                {
+                    Speler speler = (Speler)lbSBSpelers.SelectedItem;
+                    Team team = speler.EersteTeam();
+                    cbSBWSpeler.SelectedItem = team;
+
+                }
+                else
+                {
+                    tbWSpelerVoornaam.Text = "";
+                    tbWSpelerAchternaam.Text = "";
+                    tbWSpelerRugnummer.Text = "";
+                    cbSBWSpeler.Items.Clear();
+                    cbSBWFavPos.Items.Clear();
+                }
+            }
+        }
+
+        private void cbSBFavPos_MouseClick(object sender, MouseEventArgs e)
+        {
+            VulPosities(cbSBFavPos);
+        }
+
+        private void cbSBMaakTeam_MouseClick(object sender, MouseEventArgs e)
+        {
+            VulTeamsVer(cbSBMaakTeam, lbSBVereniging);
         }
         #endregion
 
@@ -664,16 +784,64 @@ namespace Turven_FraGie.Forms
             }           
         }
 
-        private void VulAlleSpelers(ListBox lb)
+        private void VulAlleSpelers(ListBox lbS, ListBox lbV)
         {
-            lb.Items.Clear();
-            foreach(Speler s in administratie.Spelers)
+            lbS.Items.Clear();
+            Vereniging vereniging = (Vereniging)lbV.SelectedItem;
+            foreach(Vereniging v in administratie.Verenigingen)
             {
-                lb.Items.Add(s);
-                lb.SelectedIndex = 0;
+                if(vereniging.Naam == v.Naam)
+                {
+                    foreach (Speler s in v.Spelers)
+                    {
+                        lbS.Items.Add(s);
+                        lbS.SelectedIndex = 0;
+                    }
+                }
+            }
+
+        }
+
+        private void VulTeamsVer(ComboBox cb, ListBox lb)
+        {            
+            foreach(Vereniging v in administratie.Verenigingen)
+            {
+                Vereniging vereniging = (Vereniging)lb.SelectedItem;
+                if (v.Naam == vereniging.Naam)
+                {
+                    cb.Items.Clear();
+                    foreach(Team t in vereniging.Teams)
+                    {
+                        cb.Items.Add(t.TeamCode);
+                        cb.SelectedIndex = 0;
+                    }
+                }
             }
         }
 
+        private void VulPosities(ComboBox cb)
+        {
+            cb.Items.Clear();
+            cb.Items.Add("Buiten");
+            cb.Items.Add("Midden");
+            cb.Items.Add("Diagonaal");
+            cb.Items.Add("Spelverdeler");
+            cb.Items.Add("Libero");
+            cb.SelectedIndex = 0;
+        }
+
+        private void StandaardCombobox(ComboBox cb)
+        {
+            cb.Items.Clear();
+            cb.Items.Add("Maak uw keuze");
+            cb.SelectedIndex = 0;
+        }
+
         #endregion  
+
+        
+
+
+
     }
 }

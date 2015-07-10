@@ -53,7 +53,6 @@ namespace Turven_FraGie
             }
 
             // wijs nu de locatie aan de vereniging
-
             try
             {
                 conn.Open();
@@ -99,10 +98,79 @@ namespace Turven_FraGie
                             v.Teams.Add(new Team(Convert.ToString(dataReader["VERENIGING_NAAM"]), Convert.ToString(dataReader["TEAMCODE"]), Convert.ToInt32(dataReader["ID"])));
                         }
                     }
+                }               
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+            finally
+            {
+                conn.Close();
+            }
+
+            try
+            {
+                conn.Open();
+                string query = "SELECT s.ID, VOORNAAM, ACHTERNAAM, RUGNUMMER, SPELER_ID, VERENIGING_NAAM FROM SPELER s, SPELER_VERENIGING sv WHERE s.ID = sv.SPELER_ID";
+                command = new OracleCommand(query, conn);
+                OracleDataReader dataReader = command.ExecuteReader();
+                while(dataReader.Read())
+                {
+                    foreach(Vereniging v in tempVereniging)
+                    {
+                        if(v.Naam == Convert.ToString(dataReader["VERENIGING_NAAM"]))
+                        {
+                            v.Spelers.Add(new Speler(Convert.ToInt32(dataReader["ID"]), Convert.ToString(dataReader["VOORNAAM"]), Convert.ToString(dataReader["ACHTERNAAM"]),
+                                Convert.ToInt32(dataReader["RUGNUMMER"])));
+                        }
+                    }
+                }
+                query = "SELECT p.ID, p.SPELER_ID, VOORNAAM, ACHTERNAAM, RUGNUMMER, ts.TEAM_ID, t.TEAMCODE, POSITIETYPE, sv.VERENIGING_NAAM FROM POSITIE p , SPELER s, SPELER_VERENIGING sv, TEAM_SPELER ts, TEAM t WHERE s.ID = ts.SPELER_ID AND s.ID = sv.SPELER_ID AND p.SPELER_ID = s.ID AND t.ID = ts.TEAM_ID";
+                command = new OracleCommand(query, conn);
+                dataReader = command.ExecuteReader();
+                while(dataReader.Read())
+                {
+                    foreach (Vereniging v in tempVereniging)
+                    {
+                        if (v.Naam == Convert.ToString(dataReader["VERENIGING_NAAM"]))
+                        {
+                            foreach(Speler s in v.Spelers)
+                            {
+                                if(s.ID == Convert.ToInt32(dataReader["SPELER_ID"]))
+                                {
+                                    s.Posities.Add(new Positie(Convert.ToInt32(dataReader["ID"]), Convert.ToInt32(dataReader["SPELER_ID"]), Convert.ToString(dataReader["POSITIETYPE"])));
+                                    s.Teams.Add(new Team(Convert.ToString(dataReader["VERENIGING_NAAM"]), Convert.ToString(dataReader["TEAMCODE"]), Convert.ToInt32(dataReader["TEAM_ID"])));
+                                }                                
+                            }                            
+                            foreach(Team t in v.Teams)
+                            {
+                                if(t.ID == Convert.ToInt32(dataReader["TEAM_ID"]))
+                                {
+                                    t.Spelers.Add(new Speler(Convert.ToInt32(dataReader["SPELER_ID"]), Convert.ToString(dataReader["VOORNAAM"]), Convert.ToString(dataReader["ACHTERNAAM"]),
+                                        Convert.ToInt32(dataReader["RUGNUMMER"])));
+                                }                                
+                            }
+                            foreach(Team t in v.Teams)
+                            {
+                                if(t.ID == Convert.ToInt32(dataReader["TEAM_ID"]))
+                                {
+                                    foreach(Speler s in t.Spelers)
+                                    {
+                                        if(s.ID == Convert.ToInt32(dataReader["SPELER_ID"]))
+                                        {
+                                            s.Posities.Add(new Positie(Convert.ToInt32(dataReader["ID"]), Convert.ToInt32(dataReader["SPELER_ID"]), Convert.ToString(dataReader["POSITIETYPE"])));
+                                            s.Teams.Add(new Team(Convert.ToString(dataReader["VERENIGING_NAAM"]), Convert.ToString(dataReader["TEAMCODE"]), Convert.ToInt32(dataReader["TEAM_ID"])));
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
                 }
                 return tempVereniging;
             }
-            catch (Exception)
+            catch(Exception)
             {
                 return null;
             }
@@ -243,6 +311,7 @@ namespace Turven_FraGie
                 conn.Close();
             }
         }
+
         #endregion
         #region Vereniging
         /// <summary>
@@ -640,7 +709,7 @@ namespace Turven_FraGie
 
         #endregion
         #region Speler
-        public bool MaakSpeler(string voornaam, string achternaam, int rugnummer, string favPos)
+        public bool MaakSpeler(string voornaam, string achternaam, int rugnummer, string favPos, string verenigingNaam, int team_id)
         {
             try
             {
@@ -650,6 +719,8 @@ namespace Turven_FraGie
                 command.Parameters.Add("P_ACHTERNAAM", OracleDbType.Varchar2).Value = achternaam;
                 command.Parameters.Add("P_RUGNUMMER", OracleDbType.Int32).Value = rugnummer;
                 command.Parameters.Add("P_FAV_POS", OracleDbType.Varchar2).Value = favPos;
+                command.Parameters.Add("P_VERENIGING_NAAM", OracleDbType.Varchar2).Value = verenigingNaam;
+                command.Parameters.Add("P_TEAM_ID", OracleDbType.Int32).Value = team_id;
                 conn.Open();
                 command.ExecuteNonQuery();
                 return true;
@@ -664,7 +735,7 @@ namespace Turven_FraGie
             }
         }
 
-        public bool WijzigSpeler(int speler_id, string voornaam, string achternaam, int rugnummer, string favPos)
+        public bool WijzigSpeler(int speler_id, string voornaam, string achternaam, int rugnummer, string favPos, string verenigingNaam, int team_id)
         {
             try
             {
@@ -681,6 +752,16 @@ namespace Turven_FraGie
                 command.Parameters.Add("favPos", OracleDbType.Varchar2).Value = favPos;
                 command.Parameters.Add("speler_id", OracleDbType.Int32).Value = speler_id;
                 command.ExecuteNonQuery();
+                query = "UPDATE TEAM_SPELER SET TEAM_ID = :team_id WHERE SPELER_ID = :speler_id";
+                command = new OracleCommand(query, conn);
+                command.Parameters.Add("team_id", OracleDbType.Int32).Value = team_id;
+                command.Parameters.Add("speler_id", OracleDbType.Int32).Value = speler_id;
+                command.ExecuteNonQuery();
+                query = "UPDATE SPELER_VERENIGING SET VERENIGING_NAAM = :vereniging_naam WHERE SPELER_ID = :speler_id";
+                command = new OracleCommand(query, conn);
+                command.Parameters.Add("vereniging_naam", OracleDbType.Varchar2).Value = verenigingNaam;
+                command.Parameters.Add("speler_id", OracleDbType.Int32).Value = speler_id;         
+                command.ExecuteNonQuery();
                 return true;
             }
             catch(Exception)
@@ -693,12 +774,20 @@ namespace Turven_FraGie
             }
         }
 
-        public bool VerwijderSpelerPos(int speler_id)
+        public bool VerwijderSpelerKoppel(int speler_id)
         {
             try
             {
                 conn.Open();
                 string query = "DELETE FROM POSITIE WHERE SPELER_ID = :speler_id";
+                command = new OracleCommand(query, conn);
+                command.Parameters.Add("speler_id", OracleDbType.Int32).Value = speler_id;
+                command.ExecuteNonQuery();
+                query = "DELETE FROM SPELER_VERENIGING WHERE SPELER_ID = :speler_id";
+                command = new OracleCommand(query, conn);
+                command.Parameters.Add("speler_id", OracleDbType.Int32).Value = speler_id;
+                command.ExecuteNonQuery();
+                query = "DELETE FROM TEAM_SPELER WHERE SPELER_ID = :speler_id";
                 command = new OracleCommand(query, conn);
                 command.Parameters.Add("speler_id", OracleDbType.Int32).Value = speler_id;
                 command.ExecuteNonQuery();

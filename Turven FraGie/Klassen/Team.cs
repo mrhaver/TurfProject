@@ -12,6 +12,7 @@ namespace Turven_FraGie.Klassen
         private int id;
         private string verenigingNaam;
         private string teamCode;
+        private List<Speler> spelers;
 
         public int ID
         {
@@ -27,18 +28,25 @@ namespace Turven_FraGie.Klassen
             get { return teamCode; }
         }
 
+        public List<Speler> Spelers
+        {
+            get { return spelers; }
+            set { spelers = value; }
+        }
+
         // Constructor(s)
         public Team(string verenigingNaam, string teamCode, int id)
         {
             this.id = id;
             this.verenigingNaam = verenigingNaam;
             this.teamCode = teamCode;
+            spelers = new List<Speler>();
         }
 
         // Methods
         public override string ToString()
         {
-            return "Team: " + this.verenigingNaam + " " + teamCode;
+            return this.verenigingNaam + " " + teamCode;
         }
     }
 }

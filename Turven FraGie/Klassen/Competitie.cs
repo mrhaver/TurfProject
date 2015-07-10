@@ -51,7 +51,7 @@ namespace Turven_FraGie.Klassen
 
         public override string ToString()
         {
-            return "Competitiecode: " + code + ", Poule: " + poule + ", Regio: " + regio;
+            return poule + " Regio " + regio;
         }
     }
 }

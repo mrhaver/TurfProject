@@ -38,10 +38,6 @@ namespace Turven_FraGie.Database_en_Administratie
             get { return databaseKoppeling.HaalCompetitiesOp(); }
         }
 
-        public List<Speler> Spelers
-        {
-            get { return databaseKoppeling.HaalSpelersOp(); }
-        }
 
         // Constructor(s)
         public Administratie()
@@ -313,6 +309,24 @@ namespace Turven_FraGie.Database_en_Administratie
                 return true;
             }
         }
+
+        public Team GeefTeamVer(string verenigingNaam, string teamCode)
+        {
+            foreach(Vereniging v in Verenigingen)
+            {
+                if(v.Naam == verenigingNaam)
+                {
+                    foreach(Team t in v.Teams)
+                    {
+                        if(t.TeamCode == teamCode)
+                        {
+                            return t;
+                        }
+                    }
+                }
+            }
+            return null;
+        }
         
         #endregion
         #region Competitie Teams
@@ -360,23 +374,52 @@ namespace Turven_FraGie.Database_en_Administratie
 
         #endregion
         #region Speler
-        public bool MaakSpeler(string voornaam, string achternaam, int rugnummer, string favPos)
+        public bool MaakSpeler(string voornaam, string achternaam, int rugnummer, string favPos, string verenigingNaam, int team_ID, out string error)
         {
-            if(!databaseKoppeling.MaakSpeler(voornaam, achternaam, rugnummer, favPos))
+            // check of het rugnummer al dan niet bezet is
+            if(!CheckRugnummer(verenigingNaam, team_ID, rugnummer, out error))
             {
+                return false;
+            }
+            if(!databaseKoppeling.MaakSpeler(voornaam, achternaam, rugnummer, favPos, verenigingNaam, team_ID))
+            {
+                error = "Fout in de database";
                 return false;
             }
             else
             {
+                error = "";
                 return true;
             }
         }
 
-        public bool WijzigSpeler(int speler_id, string voornaam, string achternaam, int rugnummer, string favPos, out string error)
+        public bool WijzigSpeler(int speler_id, string voornaam, string achternaam, int rugnummer, string favPos, string verenigingNaam, int team_id, int oudRugnummer, int oudTeam_id, out string error)
         {
             if(favPos.ToUpper() == "BUITEN" || favPos.ToUpper() == "MIDDEN" || favPos.ToUpper() == "DIAGONAAL" || favPos.ToUpper() == "SPELVERDELER" || favPos.ToUpper() == "LIBERO")
             {
-                if (!databaseKoppeling.WijzigSpeler(speler_id, voornaam, achternaam, rugnummer, favPos))
+                // als het team veranderd en het rugnummer blijft hetzelfde dan moet er gewoon gecheckt worden of het rugnummer in het andere team wel bestaat
+                // als het team hetzelfde blijft en het rugnummer veranderd moet er gecheckt worden
+                // als het team veranderd en het rugnummer veranderd moet er gecheckt worden
+                // als het team hetzelfde blijft en het rugnummer blijft hetzelfde moet er NIET gecheckt worden.
+                if(team_id == oudTeam_id)
+                {
+                    if(oudRugnummer != rugnummer)
+                    {
+                        if(!CheckRugnummer(verenigingNaam, team_id, rugnummer, out error))
+                        {
+                            return false;
+                        }
+                    }
+                }
+                else
+                {
+                    if(!CheckRugnummer(verenigingNaam, team_id, rugnummer, out error))
+                    {
+                        return false;
+                    }
+                }
+                                
+                if (!databaseKoppeling.WijzigSpeler(speler_id, voornaam, achternaam, rugnummer, favPos, verenigingNaam, team_id))
                 {
                     error = "Fout in de database";
                     return false;
@@ -399,7 +442,8 @@ namespace Turven_FraGie.Database_en_Administratie
         /// </summary>
         public bool VerwijderSpeler(int speler_id)
         {
-            if(!databaseKoppeling.VerwijderSpelerPos(speler_id))
+            // verwijder uit alle koppeltabellen
+            if(!databaseKoppeling.VerwijderSpelerKoppel(speler_id))
             {
                 return false;                
             }
@@ -414,6 +458,32 @@ namespace Turven_FraGie.Database_en_Administratie
                     return true;
                 }
             }
+        }
+
+        public bool CheckRugnummer(string verenigingNaam, int team_id, int rugnummer, out string error)
+        {
+            error = "";
+            foreach (Vereniging v in Verenigingen)
+            {
+                if (v.Naam == verenigingNaam)
+                {
+                    foreach (Team t in v.Teams)
+                    {
+                        if (t.ID == team_id)
+                        {
+                            foreach (Speler s in t.Spelers)
+                            {
+                                if (s.Rugnummer == rugnummer)
+                                {
+                                    error = "Rugnummer bestaat al in dit team";
+                                    return false;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            return true;
         }
 
         #endregion

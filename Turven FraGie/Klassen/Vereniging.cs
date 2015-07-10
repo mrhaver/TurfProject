@@ -12,6 +12,7 @@ namespace Turven_FraGie.Klassen
         private string naam;
         private Locatie locatie;
         private List<Team> teams;
+        private List<Speler> spelers;
 
         public string Naam
         {
@@ -30,12 +31,19 @@ namespace Turven_FraGie.Klassen
             set { teams = value; }
         }
 
+        public List<Speler> Spelers
+        {
+            get { return spelers; }
+            set { spelers = value; }
+        }
+
         // Constructor(s)
         public Vereniging(string naam)
         {
             this.naam = naam;
             this.locatie = new Locatie();
             this.teams = new List<Team>();
+            this.spelers = new List<Speler>();
         }
 
         public Vereniging(string naam, Locatie locatie)
@@ -48,7 +56,7 @@ namespace Turven_FraGie.Klassen
 
         public override string ToString()
         {
-            return "Naam: " + this.naam + ", Sporthal: " + this.locatie.SporthalNaam + ", Plaats: " + this.locatie.Plaats;
+            return this.naam;
         }
     }
 }

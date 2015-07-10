@@ -14,6 +14,7 @@ namespace Turven_FraGie.Klassen
         private string achternaam;
         private int rugnummer;
         private List<Positie> posities;
+        private List<Team> teams;
 
         public int ID
         {
@@ -41,6 +42,12 @@ namespace Turven_FraGie.Klassen
             set { posities = value; }
         }
 
+        public List<Team> Teams
+        {
+            get { return teams; }
+            set { teams = value; }
+        }
+
         // Constructors
         public Speler(int id, string voornaam, string achternaam, int rugnummer)
         {
@@ -49,6 +56,7 @@ namespace Turven_FraGie.Klassen
             this.achternaam = achternaam;
             this.rugnummer = rugnummer;
             posities = new List<Positie>();
+            teams = new List<Team>();
         }
 
         // Methods
@@ -62,9 +70,18 @@ namespace Turven_FraGie.Klassen
             return "";
         }
 
+        public Team EersteTeam()
+        {
+            foreach(Team t in teams)
+            {
+                return t;
+            }
+            return null;
+        }
+
         public override string ToString()
         {
-            return voornaam + " " + achternaam + " Rugnummer: " + rugnummer + " Positie: " + EerstePositie();
+            return voornaam + " " + achternaam + " " + EersteTeam().TeamCode + " " + EerstePositie() + " Nr: " + rugnummer;
         }
     }
 }
