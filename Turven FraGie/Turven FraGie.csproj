@@ -74,6 +74,8 @@
     <Compile Include="Klassen\Account.cs" />
     <Compile Include="Klassen\Competitie.cs" />
     <Compile Include="Klassen\Locatie.cs" />
+    <Compile Include="Klassen\Positie.cs" />
+    <Compile Include="Klassen\Speler.cs" />
     <Compile Include="Klassen\Team.cs" />
     <Compile Include="Klassen\Vereniging.cs" />
     <Compile Include="Program.cs" />

@@ -192,8 +192,58 @@ namespace Turven_FraGie
             }
         }
 
-        #endregion
+        public List<Speler> HaalSpelersOp()
+        {
+            List<Speler> tempSpelers = new List<Speler>();
+            try
+            {
+                conn.Open();
+                string query = "SELECT * FROM SPELER";
+                command = new OracleCommand(query, conn);
+                OracleDataReader dataReader = command.ExecuteReader();
+                while(dataReader.Read())
+                {
+                    tempSpelers.Add(new Speler(Convert.ToInt32(dataReader["ID"]), Convert.ToString(dataReader["VOORNAAM"]), Convert.ToString(dataReader["ACHTERNAAM"]),
+                        Convert.ToInt32(dataReader["RUGNUMMER"])));
+                }
+            }
+            catch(Exception)
+            {
+                return null;
+            }
+            finally
+            {
+                conn.Close();
+            }
 
+            try
+            {
+                conn.Open();
+                string query = "SELECT * FROM POSITIE";
+                command = new OracleCommand(query, conn);
+                OracleDataReader dataReader = command.ExecuteReader();
+                while (dataReader.Read())
+                {
+                    foreach(Speler s in tempSpelers)
+                    {
+                        if(s.ID == Convert.ToInt32(dataReader["ID"]))
+                        {
+                            s.Posities.Add(new Positie(Convert.ToInt32(dataReader["ID"]), Convert.ToInt32(dataReader["SPELER_ID"]), Convert.ToString(dataReader["POSITIETYPE"])));
+                        }
+                    }
+                }
+                return tempSpelers;
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+            finally
+            {
+                conn.Close();
+            }
+        }
+        #endregion
         #region Vereniging
         /// <summary>
         /// Methode die kijkt of een bepaalde vereniging al een beheerder heeft
@@ -233,7 +283,6 @@ namespace Turven_FraGie
         }
 
         #endregion
-
         #region Account
         public bool MaakAccount(string inlogNaam, string vNaam, string wachtwoord, string accountType)
         {
@@ -260,7 +309,6 @@ namespace Turven_FraGie
         }
 
         #endregion
-
         #region Competitie
 
         public bool MaakCompetitie(string code, string niveau, string poule, string regio)
@@ -354,7 +402,6 @@ namespace Turven_FraGie
         }
 
         #endregion
-
         #region Vereniging
         public bool MaakVereniging(string naam)
         {
@@ -474,7 +521,6 @@ namespace Turven_FraGie
         }
 
         #endregion
-
         #region Teams
         public bool MaakTeam(string verenigingNaam, string teamCode)
         {
@@ -547,7 +593,6 @@ namespace Turven_FraGie
         }
 
         #endregion
-
         #region Competitie Teams
         public bool WijsTeamAanCompetitie(int teamID, string compCode)
         {
@@ -593,6 +638,102 @@ namespace Turven_FraGie
             }
         }
 
+        #endregion
+        #region Speler
+        public bool MaakSpeler(string voornaam, string achternaam, int rugnummer, string favPos)
+        {
+            try
+            {
+                command = new OracleCommand("MAAKSPELER", conn);
+                command.CommandType = CommandType.StoredProcedure;
+                command.Parameters.Add("P_VOORNAAM", OracleDbType.Varchar2).Value = voornaam;
+                command.Parameters.Add("P_ACHTERNAAM", OracleDbType.Varchar2).Value = achternaam;
+                command.Parameters.Add("P_RUGNUMMER", OracleDbType.Int32).Value = rugnummer;
+                command.Parameters.Add("P_FAV_POS", OracleDbType.Varchar2).Value = favPos;
+                conn.Open();
+                command.ExecuteNonQuery();
+                return true;
+            }
+            catch(Exception)
+            {
+                return false;
+            }
+            finally
+            {
+                conn.Close();
+            }
+        }
+
+        public bool WijzigSpeler(int speler_id, string voornaam, string achternaam, int rugnummer, string favPos)
+        {
+            try
+            {
+                conn.Open();
+                string query = "UPDATE SPELER SET VOORNAAM = :voornaam, ACHTERNAAM = :achternaam, RUGNUMMER = :rugnummer WHERE ID = :speler_id";
+                command = new OracleCommand(query, conn);
+                command.Parameters.Add("voornaam", OracleDbType.Varchar2).Value = voornaam;
+                command.Parameters.Add("achternaam", OracleDbType.Varchar2).Value = achternaam;
+                command.Parameters.Add("rugnummer", OracleDbType.Int32).Value = rugnummer;
+                command.Parameters.Add("speler_id", OracleDbType.Int32).Value = speler_id;
+                command.ExecuteNonQuery();
+                query = "UPDATE POSITIE SET POSITIETYPE = :favPos WHERE SPELER_ID = :speler_id";
+                command = new OracleCommand(query, conn);
+                command.Parameters.Add("favPos", OracleDbType.Varchar2).Value = favPos;
+                command.Parameters.Add("speler_id", OracleDbType.Int32).Value = speler_id;
+                command.ExecuteNonQuery();
+                return true;
+            }
+            catch(Exception)
+            {
+                return false;
+            }
+            finally
+            {
+                conn.Close();
+            }
+        }
+
+        public bool VerwijderSpelerPos(int speler_id)
+        {
+            try
+            {
+                conn.Open();
+                string query = "DELETE FROM POSITIE WHERE SPELER_ID = :speler_id";
+                command = new OracleCommand(query, conn);
+                command.Parameters.Add("speler_id", OracleDbType.Int32).Value = speler_id;
+                command.ExecuteNonQuery();
+                return true;
+            }
+            catch(Exception)
+            {
+                return false;
+            }
+            finally
+            {
+                conn.Close();
+            }
+        }
+
+        public bool VerwijderSpeler(int id)
+        {
+            try
+            {
+                conn.Open();
+                string query = "DELETE FROM SPELER WHERE ID = :id";
+                command = new OracleCommand(query, conn);
+                command.Parameters.Add("id", OracleDbType.Int32).Value = id;
+                command.ExecuteNonQuery();
+                return true;
+            }
+            catch(Exception)
+            {
+                return false;
+            }
+            finally
+            {
+                conn.Close();
+            }
+        }
         #endregion
     }
 }

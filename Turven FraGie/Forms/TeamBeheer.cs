@@ -30,6 +30,7 @@ namespace Turven_FraGie.Forms
             VulTeams(lbTeams);
             VulTeamsComp(lbCTTeams);
             VulAlleTeamsVer(lbCTVTeams);
+            VulAlleSpelers(lbSBSpelers);
         }
 
         #region Event Handlers
@@ -213,17 +214,25 @@ namespace Turven_FraGie.Forms
         private void btnWijzigVereniging_Click(object sender, EventArgs e)
         {
             string error = "";
-            Vereniging vereniging = (Vereniging)lbVerenigingen.SelectedItem;
-            if (!administratie.WijzigVereniging(tbWVNaam.Text, vereniging.Naam, tbWVSporthalNaam.Text, tbWVPlaats.Text, tbWVPostcode.Text, tbWVHuisNummer.Text, vereniging.Locatie.ID, out error))
+            if(lbVerenigingen.SelectedItem != null)
             {
-                MessageBox.Show(error);
+                Vereniging vereniging = (Vereniging)lbVerenigingen.SelectedItem;
+                if (!administratie.WijzigVereniging(tbWVNaam.Text, vereniging.Naam, tbWVSporthalNaam.Text, tbWVPlaats.Text, tbWVPostcode.Text, tbWVHuisNummer.Text, vereniging.Locatie.ID, out error))
+                {
+                    MessageBox.Show(error);
+                }
+                else
+                {
+                    MessageBox.Show("Vereniging Gewijzigd");
+                }
+                VulVerenigingen(lbVerenigingen);
+                VulVerenigingen(lbTeamVerenigingen);
             }
             else
             {
-                MessageBox.Show("Vereniging Gewijzigd");
+                MessageBox.Show("Selecteer een vereniging");
             }
-            VulVerenigingen(lbVerenigingen);
-            VulVerenigingen(lbTeamVerenigingen);
+            
         }
 
         private void lbVerenigingen_SelectedIndexChanged(object sender, EventArgs e)
@@ -269,6 +278,15 @@ namespace Turven_FraGie.Forms
             VulTeams(lbTeams);
         }
 
+        private void lbTeams_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (lbTeams.SelectedItem != null)
+            {
+                Team team = (Team)lbTeams.SelectedItem;
+                tbWTeamCode.Text = team.TeamCode;
+            }
+        }
+
         private void btnMaakTeam_Click(object sender, EventArgs e)
         {
             string error = "";
@@ -289,9 +307,10 @@ namespace Turven_FraGie.Forms
         private void btnWTeamCode_Click(object sender, EventArgs e)
         {
             Team team = (Team)lbTeams.SelectedItem;
-            if (!administratie.WijzigTeam(team.ID, tbWTeamCode.Text))
+            string error = "";
+            if (!administratie.WijzigTeam(team.VerenigingNaam, team.ID, tbWTeamCode.Text, out error))
             {
-                MessageBox.Show("Fout in de database");
+                MessageBox.Show(error);
             }
             else
             {
@@ -407,11 +426,12 @@ namespace Turven_FraGie.Forms
         {
             if (lbCTVTeams.SelectedItem != null && lbCTCompetities.SelectedItem != null)
             {
+                string error = "";
                 Team team = (Team)lbCTVTeams.SelectedItem;
                 Competitie competitie = (Competitie)lbCTCompetities.SelectedItem;
-                if (!administratie.WijsTeamAanCompetitie(team.ID, competitie.Code))
+                if (!administratie.WijsTeamAanCompetitie(team.ID, competitie.Code, out error))
                 {
-                    MessageBox.Show("Geen connectie met de database");
+                    MessageBox.Show(error);
                 }
                 else
                 {
@@ -446,7 +466,106 @@ namespace Turven_FraGie.Forms
             {
                 MessageBox.Show("Selecteer een competitie en een team");
             }
+        }
 
+
+        #endregion
+        #region Speler
+        private void btnMaakSpeler_Click(object sender, EventArgs e)
+        {
+            if (tbVoornaam.Text != "" && tbAchternaam.Text != "" && tbRugnummer.Text != "" && tbFavorietePos.Text != "")
+            {
+                if (!administratie.MaakSpeler(tbVoornaam.Text, tbAchternaam.Text, Convert.ToInt32(tbRugnummer.Text), tbFavorietePos.Text))
+                {
+                    MessageBox.Show("Fout in de database");
+                }
+                else
+                {
+                    MessageBox.Show("Speler Aangemaakt");
+                    VulAlleSpelers(lbSBSpelers);
+                }
+            }
+            else
+            {
+                MessageBox.Show("Vul alle velden in");
+            }
+        }
+
+        private void tbSBZoekSpeler_TextChanged(object sender, EventArgs e)
+        {
+            lbSBSpelers.Items.Clear();
+            if (tbSBZoekSpeler.Text != "")
+            {
+                string vVoornaam;
+                string vAchternaam;
+                string vZoekNaam = tbSBZoekSpeler.Text.ToUpper();
+                foreach (Speler s in administratie.Spelers)
+                {
+                    vVoornaam = s.Voornaam.ToUpper();
+                    vAchternaam = s.Achternaam.ToUpper();
+                    if (vVoornaam.Contains(vZoekNaam) || vAchternaam.Contains(vZoekNaam))
+                    {
+                        lbSBSpelers.Items.Add(s);
+                        lbSBSpelers.SelectedIndex = 0;
+                    }
+                }
+            }
+            else
+            {
+                VulAlleSpelers(lbSBSpelers);
+            }
+        }
+
+        private void lbSBSpelers_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (lbSBSpelers.SelectedItem != null)
+            {
+                Speler speler = (Speler)lbSBSpelers.SelectedItem;
+                tbWSpelerVoornaam.Text = speler.Voornaam;
+                tbWSpelerAchternaam.Text = speler.Achternaam;
+                tbWSpelerRugnummer.Text = Convert.ToString(speler.Rugnummer);
+                tbWSpelerFavPos.Text = speler.EerstePositie();
+            }
+        }
+
+        private void btnWijzigSpeler_Click(object sender, EventArgs e)
+        {
+            string error = "";
+            if (lbSBSpelers.SelectedItem != null)
+            {
+                Speler speler = (Speler)lbSBSpelers.SelectedItem;
+                if (!administratie.WijzigSpeler(speler.ID, speler.Voornaam, speler.Achternaam, speler.Rugnummer, speler.EerstePositie(), out error))
+                {
+                    MessageBox.Show(error);
+                }
+                else
+                {
+                    MessageBox.Show("Speler Gewijzigd");
+                    VulAlleSpelers(lbSBSpelers);
+                }
+            }
+
+        }
+
+        private void btnVerwijderSpeler_Click(object sender, EventArgs e)
+        {
+            if (lbSBSpelers.SelectedItem != null)
+            {
+                Speler speler = (Speler)lbSBSpelers.SelectedItem;
+                if (!administratie.VerwijderSpeler(speler.ID))
+                {
+                    MessageBox.Show("Fout in de database");
+                }
+                else
+                {
+                    tbWSpelerVoornaam.Text = "";
+                    tbWSpelerAchternaam.Text = "";
+                    tbWSpelerRugnummer.Text = "";
+                    tbWSpelerFavPos.Text = "";
+                    MessageBox.Show("Speler verwijderd");
+                    VulAlleSpelers(lbSBSpelers);
+                }
+            }
         }
         #endregion
 
@@ -517,6 +636,14 @@ namespace Turven_FraGie.Forms
                         {
                             lb.Items.Add(t);
                             lb.SelectedIndex = 0;
+                            if(c.Teams.Count == 1)
+                            {
+                                lblCompetitieTeams.Text = c.Teams.Count + " team in deze competitie";
+                            }
+                            else
+                            {
+                                lblCompetitieTeams.Text = c.Teams.Count + " teams in deze competitie";
+                            }                          
                         }
                     }
                 }
@@ -537,11 +664,16 @@ namespace Turven_FraGie.Forms
             }           
         }
 
-        private void VerversAlles()
+        private void VulAlleSpelers(ListBox lb)
         {
-
+            lb.Items.Clear();
+            foreach(Speler s in administratie.Spelers)
+            {
+                lb.Items.Add(s);
+                lb.SelectedIndex = 0;
+            }
         }
 
-        #endregion
+        #endregion  
     }
 }

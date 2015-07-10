@@ -38,6 +38,11 @@ namespace Turven_FraGie.Database_en_Administratie
             get { return databaseKoppeling.HaalCompetitiesOp(); }
         }
 
+        public List<Speler> Spelers
+        {
+            get { return databaseKoppeling.HaalSpelersOp(); }
+        }
+
         // Constructor(s)
         public Administratie()
         {
@@ -181,6 +186,11 @@ namespace Turven_FraGie.Database_en_Administratie
                     return false;
                 }
             }
+            if(postcode.Length > 6)
+            {
+                error = "Postcode mag maar een maximale lengte van 6 hebben";
+                return false;
+            }
             if (databaseKoppeling.MaakVereniging(vNaam))
             {
                 if (databaseKoppeling.WijsLocatieAanVereniging(vNaam, shNaam, plaats, postcode, huisnummer))
@@ -203,6 +213,11 @@ namespace Turven_FraGie.Database_en_Administratie
 
         public bool WijzigVereniging(string vNaam, string oudVNaam, string shNaam, string plaats, string postcode, string huisnummer, int vID, out string error)
         {
+            if (postcode.Length > 6)
+            {
+                error = "Postcode mag maar een maximale lengte van 6 hebben";
+                return false;
+            }
             if(databaseKoppeling.WijzigVereniging(vNaam, oudVNaam, shNaam, plaats, postcode, huisnummer, vID))
             {
                 error = "";
@@ -259,14 +274,30 @@ namespace Turven_FraGie.Database_en_Administratie
             }
         }
 
-        public bool WijzigTeam(int id, string teamCode)
+        public bool WijzigTeam(string verenigingNaam, int id, string teamCode, out string error)
         {
+            foreach (Vereniging v in Verenigingen)
+            {
+                if (v.Naam == verenigingNaam)
+                {
+                    foreach (Team t in v.Teams)
+                    {
+                        if (t.TeamCode == teamCode)
+                        {
+                            error = "Teamcode bestaat al";
+                            return false;
+                        }
+                    }
+                }
+            }
             if(!databaseKoppeling.WijzigTeam(id, teamCode))
             {
+                error = "Fout in de database";
                 return false;
             }
             else
             {
+                error = "";
                 return true;
             }
         }
@@ -286,14 +317,31 @@ namespace Turven_FraGie.Database_en_Administratie
         #endregion
         #region Competitie Teams
 
-        public bool WijsTeamAanCompetitie(int teamID, string compCode)
+        public bool WijsTeamAanCompetitie(int teamID, string compCode, out string error)
         {
+            // check of het team al dan niet in de competitie zit
+            foreach(Competitie c in Competities)
+            {
+                if(c.Code == compCode)
+                {
+                    foreach(Team t in c.Teams)
+                    {
+                        if(t.ID == teamID)
+                        {
+                            error = "Team zit al in de competitie";
+                            return false;
+                        }
+                    }
+                }
+            }
             if (!databaseKoppeling.WijsTeamAanCompetitie(teamID, compCode))
             {
+                error = "Fout in de database";
                 return false;
             }
             else
             {
+                error = "";
                 return true;
             }
         }
@@ -307,6 +355,64 @@ namespace Turven_FraGie.Database_en_Administratie
             else
             {
                 return true;
+            }
+        }
+
+        #endregion
+        #region Speler
+        public bool MaakSpeler(string voornaam, string achternaam, int rugnummer, string favPos)
+        {
+            if(!databaseKoppeling.MaakSpeler(voornaam, achternaam, rugnummer, favPos))
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+        }
+
+        public bool WijzigSpeler(int speler_id, string voornaam, string achternaam, int rugnummer, string favPos, out string error)
+        {
+            if(favPos.ToUpper() == "BUITEN" || favPos.ToUpper() == "MIDDEN" || favPos.ToUpper() == "DIAGONAAL" || favPos.ToUpper() == "SPELVERDELER" || favPos.ToUpper() == "LIBERO")
+            {
+                if (!databaseKoppeling.WijzigSpeler(speler_id, voornaam, achternaam, rugnummer, favPos))
+                {
+                    error = "Fout in de database";
+                    return false;
+                }
+                else
+                {
+                    error = "";
+                    return true;
+                }
+            }
+            else
+            {
+                error = "Positie moet Buiten, Midden, Diagonaal, Spelverdeler of Libero zijn";
+                return false;
+            }
+        }
+
+        /// <summary>
+        /// Apart verwijderen want anders kwam er een foutmelding!
+        /// </summary>
+        public bool VerwijderSpeler(int speler_id)
+        {
+            if(!databaseKoppeling.VerwijderSpelerPos(speler_id))
+            {
+                return false;                
+            }
+            else
+            {
+                if (!databaseKoppeling.VerwijderSpeler(speler_id))
+                {
+                    return false;
+                }
+                else
+                {
+                    return true;
+                }
             }
         }
 

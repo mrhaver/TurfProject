@@ -106,12 +106,37 @@
             this.tbCTZoekTeamVer = new System.Windows.Forms.TextBox();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.btnCTVerwijderTeam = new System.Windows.Forms.Button();
-            this.label25 = new System.Windows.Forms.Label();
+            this.lblCompetitieTeams = new System.Windows.Forms.Label();
             this.lbCTTeams = new System.Windows.Forms.ListBox();
             this.lbCTCompetities = new System.Windows.Forms.ListBox();
             this.label24 = new System.Windows.Forms.Label();
             this.tbCTZoekComp = new System.Windows.Forms.TextBox();
             this.btnTerug = new System.Windows.Forms.Button();
+            this.tabPage5 = new System.Windows.Forms.TabPage();
+            this.groupBox6 = new System.Windows.Forms.GroupBox();
+            this.btnMaakSpeler = new System.Windows.Forms.Button();
+            this.label25 = new System.Windows.Forms.Label();
+            this.tbFavorietePos = new System.Windows.Forms.TextBox();
+            this.label26 = new System.Windows.Forms.Label();
+            this.tbRugnummer = new System.Windows.Forms.TextBox();
+            this.label28 = new System.Windows.Forms.Label();
+            this.tbAchternaam = new System.Windows.Forms.TextBox();
+            this.label29 = new System.Windows.Forms.Label();
+            this.tbVoornaam = new System.Windows.Forms.TextBox();
+            this.groupBox7 = new System.Windows.Forms.GroupBox();
+            this.btnVerwijderSpeler = new System.Windows.Forms.Button();
+            this.label30 = new System.Windows.Forms.Label();
+            this.tbSBZoekSpeler = new System.Windows.Forms.TextBox();
+            this.lbSBSpelers = new System.Windows.Forms.ListBox();
+            this.btnWijzigSpeler = new System.Windows.Forms.Button();
+            this.label31 = new System.Windows.Forms.Label();
+            this.tbWSpelerFavPos = new System.Windows.Forms.TextBox();
+            this.label32 = new System.Windows.Forms.Label();
+            this.tbWSpelerRugnummer = new System.Windows.Forms.TextBox();
+            this.label33 = new System.Windows.Forms.Label();
+            this.tbWSpelerAchternaam = new System.Windows.Forms.TextBox();
+            this.label34 = new System.Windows.Forms.Label();
+            this.tbWSpelerVoornaam = new System.Windows.Forms.TextBox();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -126,6 +151,9 @@
             this.tabPage4.SuspendLayout();
             this.groupBox5.SuspendLayout();
             this.groupBox4.SuspendLayout();
+            this.tabPage5.SuspendLayout();
+            this.groupBox6.SuspendLayout();
+            this.groupBox7.SuspendLayout();
             this.SuspendLayout();
             // 
             // tabControl1
@@ -134,6 +162,7 @@
             this.tabControl1.Controls.Add(this.tabPage2);
             this.tabControl1.Controls.Add(this.tabPage3);
             this.tabControl1.Controls.Add(this.tabPage4);
+            this.tabControl1.Controls.Add(this.tabPage5);
             this.tabControl1.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.tabControl1.Location = new System.Drawing.Point(0, 0);
             this.tabControl1.Name = "tabControl1";
@@ -738,9 +767,9 @@
             this.label23.AutoSize = true;
             this.label23.Location = new System.Drawing.Point(275, 46);
             this.label23.Name = "label23";
-            this.label23.Size = new System.Drawing.Size(133, 29);
+            this.label23.Size = new System.Drawing.Size(209, 29);
             this.label23.TabIndex = 14;
-            this.label23.Text = "Teamcode";
+            this.label23.Text = "Wijzig Teamcode";
             // 
             // btnVerwijderTeam
             // 
@@ -778,15 +807,16 @@
             this.lbTeams.Name = "lbTeams";
             this.lbTeams.Size = new System.Drawing.Size(519, 178);
             this.lbTeams.TabIndex = 12;
+            this.lbTeams.SelectedIndexChanged += new System.EventHandler(this.lbTeams_SelectedIndexChanged);
             // 
             // label22
             // 
             this.label22.AutoSize = true;
             this.label22.Location = new System.Drawing.Point(6, 46);
             this.label22.Name = "label22";
-            this.label22.Size = new System.Drawing.Size(133, 29);
+            this.label22.Size = new System.Drawing.Size(224, 29);
             this.label22.TabIndex = 0;
-            this.label22.Text = "Teamcode";
+            this.label22.Text = "Nieuwe Teamcode";
             // 
             // groupBox3
             // 
@@ -854,7 +884,7 @@
             // 
             // btnVoegTeamToe
             // 
-            this.btnVoegTeamToe.Location = new System.Drawing.Point(6, 310);
+            this.btnVoegTeamToe.Location = new System.Drawing.Point(6, 517);
             this.btnVoegTeamToe.Name = "btnVoegTeamToe";
             this.btnVoegTeamToe.Size = new System.Drawing.Size(226, 75);
             this.btnVoegTeamToe.TabIndex = 15;
@@ -868,7 +898,7 @@
             this.lbCTVTeams.ItemHeight = 29;
             this.lbCTVTeams.Location = new System.Drawing.Point(4, 115);
             this.lbCTVTeams.Name = "lbCTVTeams";
-            this.lbCTVTeams.Size = new System.Drawing.Size(760, 178);
+            this.lbCTVTeams.Size = new System.Drawing.Size(760, 381);
             this.lbCTVTeams.TabIndex = 12;
             // 
             // label27
@@ -892,7 +922,7 @@
             // groupBox4
             // 
             this.groupBox4.Controls.Add(this.btnCTVerwijderTeam);
-            this.groupBox4.Controls.Add(this.label25);
+            this.groupBox4.Controls.Add(this.lblCompetitieTeams);
             this.groupBox4.Controls.Add(this.lbCTTeams);
             this.groupBox4.Controls.Add(this.lbCTCompetities);
             this.groupBox4.Controls.Add(this.label24);
@@ -915,14 +945,14 @@
             this.btnCTVerwijderTeam.UseVisualStyleBackColor = true;
             this.btnCTVerwijderTeam.Click += new System.EventHandler(this.btnCTVerwijderTeam_Click);
             // 
-            // label25
+            // lblCompetitieTeams
             // 
-            this.label25.AutoSize = true;
-            this.label25.Location = new System.Drawing.Point(7, 301);
-            this.label25.Name = "label25";
-            this.label25.Size = new System.Drawing.Size(91, 29);
-            this.label25.TabIndex = 16;
-            this.label25.Text = "Teams";
+            this.lblCompetitieTeams.AutoSize = true;
+            this.lblCompetitieTeams.Location = new System.Drawing.Point(7, 301);
+            this.lblCompetitieTeams.Name = "lblCompetitieTeams";
+            this.lblCompetitieTeams.Size = new System.Drawing.Size(91, 29);
+            this.lblCompetitieTeams.TabIndex = 16;
+            this.lblCompetitieTeams.Text = "Teams";
             // 
             // lbCTTeams
             // 
@@ -972,6 +1002,254 @@
             this.btnTerug.UseVisualStyleBackColor = true;
             this.btnTerug.Click += new System.EventHandler(this.btnTerug_Click);
             // 
+            // tabPage5
+            // 
+            this.tabPage5.Controls.Add(this.groupBox7);
+            this.tabPage5.Controls.Add(this.groupBox6);
+            this.tabPage5.Location = new System.Drawing.Point(4, 38);
+            this.tabPage5.Name = "tabPage5";
+            this.tabPage5.Size = new System.Drawing.Size(1766, 640);
+            this.tabPage5.TabIndex = 4;
+            this.tabPage5.Text = "Speler Beheer";
+            this.tabPage5.UseVisualStyleBackColor = true;
+            // 
+            // groupBox6
+            // 
+            this.groupBox6.Controls.Add(this.btnMaakSpeler);
+            this.groupBox6.Controls.Add(this.label25);
+            this.groupBox6.Controls.Add(this.tbFavorietePos);
+            this.groupBox6.Controls.Add(this.label26);
+            this.groupBox6.Controls.Add(this.tbRugnummer);
+            this.groupBox6.Controls.Add(this.label28);
+            this.groupBox6.Controls.Add(this.tbAchternaam);
+            this.groupBox6.Controls.Add(this.label29);
+            this.groupBox6.Controls.Add(this.tbVoornaam);
+            this.groupBox6.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.groupBox6.Location = new System.Drawing.Point(8, 14);
+            this.groupBox6.Name = "groupBox6";
+            this.groupBox6.Size = new System.Drawing.Size(387, 520);
+            this.groupBox6.TabIndex = 1;
+            this.groupBox6.TabStop = false;
+            this.groupBox6.Text = "Maak Speler";
+            // 
+            // btnMaakSpeler
+            // 
+            this.btnMaakSpeler.Location = new System.Drawing.Point(6, 412);
+            this.btnMaakSpeler.Name = "btnMaakSpeler";
+            this.btnMaakSpeler.Size = new System.Drawing.Size(226, 91);
+            this.btnMaakSpeler.TabIndex = 8;
+            this.btnMaakSpeler.Text = "Maak Speler";
+            this.btnMaakSpeler.UseVisualStyleBackColor = true;
+            this.btnMaakSpeler.Click += new System.EventHandler(this.btnMaakSpeler_Click);
+            // 
+            // label25
+            // 
+            this.label25.AutoSize = true;
+            this.label25.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label25.Location = new System.Drawing.Point(6, 186);
+            this.label25.Name = "label25";
+            this.label25.Size = new System.Drawing.Size(118, 25);
+            this.label25.TabIndex = 7;
+            this.label25.Text = "Rugnummer";
+            // 
+            // tbFavorietePos
+            // 
+            this.tbFavorietePos.Location = new System.Drawing.Point(6, 289);
+            this.tbFavorietePos.Name = "tbFavorietePos";
+            this.tbFavorietePos.Size = new System.Drawing.Size(317, 36);
+            this.tbFavorietePos.TabIndex = 6;
+            // 
+            // label26
+            // 
+            this.label26.AutoSize = true;
+            this.label26.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label26.Location = new System.Drawing.Point(6, 261);
+            this.label26.Name = "label26";
+            this.label26.Size = new System.Drawing.Size(156, 25);
+            this.label26.TabIndex = 5;
+            this.label26.Text = "Favoriete Positie";
+            // 
+            // tbRugnummer
+            // 
+            this.tbRugnummer.Location = new System.Drawing.Point(6, 214);
+            this.tbRugnummer.Name = "tbRugnummer";
+            this.tbRugnummer.Size = new System.Drawing.Size(317, 36);
+            this.tbRugnummer.TabIndex = 4;
+            // 
+            // label28
+            // 
+            this.label28.AutoSize = true;
+            this.label28.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label28.Location = new System.Drawing.Point(6, 107);
+            this.label28.Name = "label28";
+            this.label28.Size = new System.Drawing.Size(118, 25);
+            this.label28.TabIndex = 3;
+            this.label28.Text = "Achternaam";
+            // 
+            // tbAchternaam
+            // 
+            this.tbAchternaam.Location = new System.Drawing.Point(6, 143);
+            this.tbAchternaam.Name = "tbAchternaam";
+            this.tbAchternaam.Size = new System.Drawing.Size(317, 36);
+            this.tbAchternaam.TabIndex = 2;
+            // 
+            // label29
+            // 
+            this.label29.AutoSize = true;
+            this.label29.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label29.Location = new System.Drawing.Point(6, 32);
+            this.label29.Name = "label29";
+            this.label29.Size = new System.Drawing.Size(103, 25);
+            this.label29.TabIndex = 1;
+            this.label29.Text = "Voornaam";
+            // 
+            // tbVoornaam
+            // 
+            this.tbVoornaam.Location = new System.Drawing.Point(6, 68);
+            this.tbVoornaam.Name = "tbVoornaam";
+            this.tbVoornaam.Size = new System.Drawing.Size(317, 36);
+            this.tbVoornaam.TabIndex = 0;
+            // 
+            // groupBox7
+            // 
+            this.groupBox7.Controls.Add(this.label31);
+            this.groupBox7.Controls.Add(this.tbWSpelerFavPos);
+            this.groupBox7.Controls.Add(this.label32);
+            this.groupBox7.Controls.Add(this.tbWSpelerRugnummer);
+            this.groupBox7.Controls.Add(this.label33);
+            this.groupBox7.Controls.Add(this.tbWSpelerAchternaam);
+            this.groupBox7.Controls.Add(this.label34);
+            this.groupBox7.Controls.Add(this.tbWSpelerVoornaam);
+            this.groupBox7.Controls.Add(this.btnVerwijderSpeler);
+            this.groupBox7.Controls.Add(this.label30);
+            this.groupBox7.Controls.Add(this.tbSBZoekSpeler);
+            this.groupBox7.Controls.Add(this.lbSBSpelers);
+            this.groupBox7.Controls.Add(this.btnWijzigSpeler);
+            this.groupBox7.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.groupBox7.Location = new System.Drawing.Point(427, 14);
+            this.groupBox7.Name = "groupBox7";
+            this.groupBox7.Size = new System.Drawing.Size(1247, 520);
+            this.groupBox7.TabIndex = 10;
+            this.groupBox7.TabStop = false;
+            this.groupBox7.Text = "Wijzig / Verwijder Speler";
+            // 
+            // btnVerwijderSpeler
+            // 
+            this.btnVerwijderSpeler.ForeColor = System.Drawing.Color.Red;
+            this.btnVerwijderSpeler.Location = new System.Drawing.Point(834, 420);
+            this.btnVerwijderSpeler.Name = "btnVerwijderSpeler";
+            this.btnVerwijderSpeler.Size = new System.Drawing.Size(226, 75);
+            this.btnVerwijderSpeler.TabIndex = 12;
+            this.btnVerwijderSpeler.Text = "Verwijder Speler";
+            this.btnVerwijderSpeler.UseVisualStyleBackColor = true;
+            this.btnVerwijderSpeler.Click += new System.EventHandler(this.btnVerwijderSpeler_Click);
+            // 
+            // label30
+            // 
+            this.label30.AutoSize = true;
+            this.label30.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label30.Location = new System.Drawing.Point(9, 54);
+            this.label30.Name = "label30";
+            this.label30.Size = new System.Drawing.Size(368, 25);
+            this.label30.TabIndex = 11;
+            this.label30.Text = "Zoek Speler Op Voornaam / Achternaam";
+            // 
+            // tbSBZoekSpeler
+            // 
+            this.tbSBZoekSpeler.Location = new System.Drawing.Point(8, 86);
+            this.tbSBZoekSpeler.Name = "tbSBZoekSpeler";
+            this.tbSBZoekSpeler.Size = new System.Drawing.Size(317, 36);
+            this.tbSBZoekSpeler.TabIndex = 10;
+            this.tbSBZoekSpeler.TextChanged += new System.EventHandler(this.tbSBZoekSpeler_TextChanged);
+            // 
+            // lbSBSpelers
+            // 
+            this.lbSBSpelers.FormattingEnabled = true;
+            this.lbSBSpelers.ItemHeight = 29;
+            this.lbSBSpelers.Location = new System.Drawing.Point(10, 149);
+            this.lbSBSpelers.Name = "lbSBSpelers";
+            this.lbSBSpelers.Size = new System.Drawing.Size(760, 265);
+            this.lbSBSpelers.TabIndex = 9;
+            this.lbSBSpelers.SelectedIndexChanged += new System.EventHandler(this.lbSBSpelers_SelectedIndexChanged);
+            // 
+            // btnWijzigSpeler
+            // 
+            this.btnWijzigSpeler.Location = new System.Drawing.Point(834, 339);
+            this.btnWijzigSpeler.Name = "btnWijzigSpeler";
+            this.btnWijzigSpeler.Size = new System.Drawing.Size(226, 75);
+            this.btnWijzigSpeler.TabIndex = 8;
+            this.btnWijzigSpeler.Text = "Wijzig Speler";
+            this.btnWijzigSpeler.UseVisualStyleBackColor = true;
+            this.btnWijzigSpeler.Click += new System.EventHandler(this.btnWijzigSpeler_Click);
+            // 
+            // label31
+            // 
+            this.label31.AutoSize = true;
+            this.label31.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label31.Location = new System.Drawing.Point(829, 186);
+            this.label31.Name = "label31";
+            this.label31.Size = new System.Drawing.Size(118, 25);
+            this.label31.TabIndex = 20;
+            this.label31.Text = "Rugnummer";
+            // 
+            // tbWSpelerFavPos
+            // 
+            this.tbWSpelerFavPos.Location = new System.Drawing.Point(829, 289);
+            this.tbWSpelerFavPos.Name = "tbWSpelerFavPos";
+            this.tbWSpelerFavPos.Size = new System.Drawing.Size(317, 36);
+            this.tbWSpelerFavPos.TabIndex = 19;
+            // 
+            // label32
+            // 
+            this.label32.AutoSize = true;
+            this.label32.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label32.Location = new System.Drawing.Point(829, 261);
+            this.label32.Name = "label32";
+            this.label32.Size = new System.Drawing.Size(156, 25);
+            this.label32.TabIndex = 18;
+            this.label32.Text = "Favoriete Positie";
+            // 
+            // tbWSpelerRugnummer
+            // 
+            this.tbWSpelerRugnummer.Location = new System.Drawing.Point(829, 214);
+            this.tbWSpelerRugnummer.Name = "tbWSpelerRugnummer";
+            this.tbWSpelerRugnummer.Size = new System.Drawing.Size(317, 36);
+            this.tbWSpelerRugnummer.TabIndex = 17;
+            // 
+            // label33
+            // 
+            this.label33.AutoSize = true;
+            this.label33.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label33.Location = new System.Drawing.Point(829, 107);
+            this.label33.Name = "label33";
+            this.label33.Size = new System.Drawing.Size(118, 25);
+            this.label33.TabIndex = 16;
+            this.label33.Text = "Achternaam";
+            // 
+            // tbWSpelerAchternaam
+            // 
+            this.tbWSpelerAchternaam.Location = new System.Drawing.Point(829, 143);
+            this.tbWSpelerAchternaam.Name = "tbWSpelerAchternaam";
+            this.tbWSpelerAchternaam.Size = new System.Drawing.Size(317, 36);
+            this.tbWSpelerAchternaam.TabIndex = 15;
+            // 
+            // label34
+            // 
+            this.label34.AutoSize = true;
+            this.label34.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label34.Location = new System.Drawing.Point(829, 32);
+            this.label34.Name = "label34";
+            this.label34.Size = new System.Drawing.Size(103, 25);
+            this.label34.TabIndex = 14;
+            this.label34.Text = "Voornaam";
+            // 
+            // tbWSpelerVoornaam
+            // 
+            this.tbWSpelerVoornaam.Location = new System.Drawing.Point(829, 68);
+            this.tbWSpelerVoornaam.Name = "tbWSpelerVoornaam";
+            this.tbWSpelerVoornaam.Size = new System.Drawing.Size(317, 36);
+            this.tbWSpelerVoornaam.TabIndex = 13;
+            // 
             // TeamBeheer
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -1004,6 +1282,11 @@
             this.groupBox5.PerformLayout();
             this.groupBox4.ResumeLayout(false);
             this.groupBox4.PerformLayout();
+            this.tabPage5.ResumeLayout(false);
+            this.groupBox6.ResumeLayout(false);
+            this.groupBox6.PerformLayout();
+            this.groupBox7.ResumeLayout(false);
+            this.groupBox7.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -1089,10 +1372,35 @@
         private System.Windows.Forms.TextBox tbCTZoekTeamVer;
         private System.Windows.Forms.GroupBox groupBox4;
         private System.Windows.Forms.Button btnCTVerwijderTeam;
-        private System.Windows.Forms.Label label25;
+        private System.Windows.Forms.Label lblCompetitieTeams;
         private System.Windows.Forms.ListBox lbCTTeams;
         private System.Windows.Forms.ListBox lbCTCompetities;
         private System.Windows.Forms.Label label24;
         private System.Windows.Forms.TextBox tbCTZoekComp;
+        private System.Windows.Forms.TabPage tabPage5;
+        private System.Windows.Forms.GroupBox groupBox6;
+        private System.Windows.Forms.Button btnMaakSpeler;
+        private System.Windows.Forms.Label label25;
+        private System.Windows.Forms.TextBox tbFavorietePos;
+        private System.Windows.Forms.Label label26;
+        private System.Windows.Forms.TextBox tbRugnummer;
+        private System.Windows.Forms.Label label28;
+        private System.Windows.Forms.TextBox tbAchternaam;
+        private System.Windows.Forms.Label label29;
+        private System.Windows.Forms.TextBox tbVoornaam;
+        private System.Windows.Forms.GroupBox groupBox7;
+        private System.Windows.Forms.Label label31;
+        private System.Windows.Forms.TextBox tbWSpelerFavPos;
+        private System.Windows.Forms.Label label32;
+        private System.Windows.Forms.TextBox tbWSpelerRugnummer;
+        private System.Windows.Forms.Label label33;
+        private System.Windows.Forms.TextBox tbWSpelerAchternaam;
+        private System.Windows.Forms.Label label34;
+        private System.Windows.Forms.TextBox tbWSpelerVoornaam;
+        private System.Windows.Forms.Button btnVerwijderSpeler;
+        private System.Windows.Forms.Label label30;
+        private System.Windows.Forms.TextBox tbSBZoekSpeler;
+        private System.Windows.Forms.ListBox lbSBSpelers;
+        private System.Windows.Forms.Button btnWijzigSpeler;
     }
 }
