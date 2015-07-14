@@ -45,6 +45,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Database en Administratie\AccesDatabaseKoppeling.cs" />
     <Compile Include="Database en Administratie\Administratie.cs" />
     <Compile Include="Database en Administratie\DatabaseKoppeling.cs" />
     <Compile Include="Forms\InlogForm.cs">

@@ -15,6 +15,7 @@ namespace Turven_FraGie.Database_en_Administratie
     {
         // Fields / Properties
         private DatabaseKoppeling databaseKoppeling;
+        private AccesDatabaseKoppeling aDatabaseKoppeling;
         private static Account nuIngelogd;
 
         public Account NuIngelogd
@@ -25,17 +26,17 @@ namespace Turven_FraGie.Database_en_Administratie
 
         public List<Vereniging> Verenigingen
         {
-            get { return databaseKoppeling.HaalVerenigingenOp(); }
+            get { return aDatabaseKoppeling.HaalVerenigingenOp(); }
         }
 
         public List<Account> Accounts
         {
-            get { return databaseKoppeling.HaalAccountsOp(); }
+            get { return aDatabaseKoppeling.HaalAccountsOp(); }
         }
 
         public List<Competitie> Competities
         {
-            get { return databaseKoppeling.HaalCompetitiesOp(); }
+            get { return aDatabaseKoppeling.HaalCompetitiesOp(); }
         }
 
 
@@ -43,12 +44,13 @@ namespace Turven_FraGie.Database_en_Administratie
         public Administratie()
         {
             databaseKoppeling = new DatabaseKoppeling();
+            aDatabaseKoppeling = new AccesDatabaseKoppeling();
         }
 
         // Methods
         public bool HeeftBeheerder(string vNaam, out string error)
         {
-            if(databaseKoppeling.HeeftBeheerder(vNaam, out error))
+            if(aDatabaseKoppeling.HeeftBeheerder(vNaam, out error))
             {
                 return true;
             }
@@ -61,7 +63,7 @@ namespace Turven_FraGie.Database_en_Administratie
         #region Account
         public bool MaakAccount(string inlogNaam, string vNaam, string wachtwoord, string accountType)
         {
-            if(databaseKoppeling.MaakAccount(inlogNaam, vNaam, wachtwoord, accountType))
+            if(aDatabaseKoppeling.MaakAccount(inlogNaam, vNaam, wachtwoord, accountType))
             {
                 return true;
             }
@@ -99,7 +101,7 @@ namespace Turven_FraGie.Database_en_Administratie
                     return false;
                 }
             }
-            if(!databaseKoppeling.MaakCompetitie(code, niveau, poule, regio))
+            if(!aDatabaseKoppeling.MaakCompetitie(code, niveau, poule, regio))
             {
                 error = "Fout in de database";
                 return false;
@@ -120,7 +122,7 @@ namespace Turven_FraGie.Database_en_Administratie
                 if(c.Code == code)
                 {
                     // voor deze code moet worden upgedate
-                    if(!databaseKoppeling.WijzigCompetitie(code, niveau, poule, regio))
+                    if(!aDatabaseKoppeling.WijzigCompetitie(code, niveau, poule, regio))
                     {
                         error = "Fout in de database";
                         return false;
@@ -147,9 +149,9 @@ namespace Turven_FraGie.Database_en_Administratie
             {
                 if (c.Code == compCode)
                 {
-                    if (databaseKoppeling.VerwijderCompetitieTeam(compCode))
+                    if (aDatabaseKoppeling.VerwijderCompetitieTeam(compCode))
                     {                        
-                        if (databaseKoppeling.VerwijderCompetitie(compCode))
+                        if (aDatabaseKoppeling.VerwijderCompetitie(compCode))
                         {
                             return true;
                         }
@@ -187,9 +189,9 @@ namespace Turven_FraGie.Database_en_Administratie
                 error = "Postcode mag maar een maximale lengte van 6 hebben";
                 return false;
             }
-            if (databaseKoppeling.MaakVereniging(vNaam))
+            if (aDatabaseKoppeling.MaakVereniging(vNaam))
             {
-                if (databaseKoppeling.WijsLocatieAanVereniging(vNaam, shNaam, plaats, postcode, huisnummer))
+                if (aDatabaseKoppeling.WijsLocatieAanVereniging(vNaam, shNaam, plaats, postcode, huisnummer))
                 {
                     error = "";
                     return true;
@@ -214,7 +216,7 @@ namespace Turven_FraGie.Database_en_Administratie
                 error = "Postcode mag maar een maximale lengte van 6 hebben";
                 return false;
             }
-            if(databaseKoppeling.WijzigVereniging(vNaam, oudVNaam, shNaam, plaats, postcode, huisnummer, vID))
+            if(aDatabaseKoppeling.WijzigVereniging(vNaam, oudVNaam, shNaam, plaats, postcode, huisnummer, vID))
             {
                 error = "";
                 return true;
@@ -228,7 +230,7 @@ namespace Turven_FraGie.Database_en_Administratie
 
         public bool VerwijderVereniging(string vNaam)
         {
-            if(databaseKoppeling.VerwijderVereniging(vNaam))
+            if(aDatabaseKoppeling.VerwijderVereniging(vNaam))
             {
                 return true;
             }
@@ -258,7 +260,7 @@ namespace Turven_FraGie.Database_en_Administratie
                     }                   
                 }
             }
-            if (!databaseKoppeling.MaakTeam(verenigingNaam, teamCode))
+            if (!aDatabaseKoppeling.MaakTeam(verenigingNaam, teamCode))
             {
                 error = "Fout in de database raadpleeg de applicatiebeheerder";
                 return false;
@@ -286,7 +288,7 @@ namespace Turven_FraGie.Database_en_Administratie
                     }
                 }
             }
-            if(!databaseKoppeling.WijzigTeam(id, teamCode))
+            if(!aDatabaseKoppeling.WijzigTeam(id, teamCode))
             {
                 error = "Fout in de database";
                 return false;
@@ -300,7 +302,7 @@ namespace Turven_FraGie.Database_en_Administratie
 
         public bool VerwijderTeam(int id)
         {
-            if(!databaseKoppeling.VerwijderTeam(id))
+            if(!aDatabaseKoppeling.VerwijderTeam(id))
             {
                 return false;
             }
@@ -348,7 +350,7 @@ namespace Turven_FraGie.Database_en_Administratie
                     }
                 }
             }
-            if (!databaseKoppeling.WijsTeamAanCompetitie(teamID, compCode))
+            if (!aDatabaseKoppeling.WijsTeamAanCompetitie(teamID, compCode))
             {
                 error = "Fout in de database";
                 return false;
@@ -362,7 +364,7 @@ namespace Turven_FraGie.Database_en_Administratie
         
         public bool VerwijderTeamUitCompetitie(int teamID, string compCode)
         {
-            if(!databaseKoppeling.VerwijderTeamUitCompetitie(teamID, compCode))
+            if(!aDatabaseKoppeling.VerwijderTeamUitCompetitie(teamID, compCode))
             {
                 return false;
             }
@@ -381,7 +383,7 @@ namespace Turven_FraGie.Database_en_Administratie
             {
                 return false;
             }
-            if(!databaseKoppeling.MaakSpeler(voornaam, achternaam, rugnummer, favPos, verenigingNaam, team_ID))
+            if(!aDatabaseKoppeling.MaakSpeler(voornaam, achternaam, rugnummer, favPos, verenigingNaam, team_ID))
             {
                 error = "Fout in de database";
                 return false;
@@ -419,7 +421,7 @@ namespace Turven_FraGie.Database_en_Administratie
                     }
                 }
                                 
-                if (!databaseKoppeling.WijzigSpeler(speler_id, voornaam, achternaam, rugnummer, favPos, verenigingNaam, team_id))
+                if (!aDatabaseKoppeling.WijzigSpeler(speler_id, voornaam, achternaam, rugnummer, favPos, verenigingNaam, team_id))
                 {
                     error = "Fout in de database";
                     return false;
@@ -443,13 +445,13 @@ namespace Turven_FraGie.Database_en_Administratie
         public bool VerwijderSpeler(int speler_id)
         {
             // verwijder uit alle koppeltabellen
-            if(!databaseKoppeling.VerwijderSpelerKoppel(speler_id))
+            if(!aDatabaseKoppeling.VerwijderSpelerKoppel(speler_id))
             {
                 return false;                
             }
             else
             {
-                if (!databaseKoppeling.VerwijderSpeler(speler_id))
+                if (!aDatabaseKoppeling.VerwijderSpeler(speler_id))
                 {
                     return false;
                 }
