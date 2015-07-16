@@ -17,7 +17,7 @@ namespace Turven_FraGie.Database_en_Administratie
 
         public AccesDatabaseKoppeling()
         {
-            string bestandsnaam = Application.StartupPath + "/DB_Turven_Fragie.accdb";
+            string bestandsnaam = @"C:\Users\Frank Haver\Documents\Frank\Turf Project\Implementatie\Turven FraGie\TurfProject\Turven FraGie\bin\Debug/DB_Turven_Fragie.accdb";
             string provider = "Provider=Microsoft.ACE.OLEDB.12.0"; //voor een accdb-database.
             string connectionString = provider + ";Data Source=" + bestandsnaam;
             conn = new OleDbConnection(connectionString);
@@ -492,9 +492,10 @@ namespace Turven_FraGie.Database_en_Administratie
             try
             {
                 conn.Open();
+                int nieuwId = LocatieSeq();
                 string query = "INSERT INTO LOCATIE VALUES(p_Locatie, @p_v_Naam, @p_sp_Naam, @p_Plaats, @p_Postcode, @p_HuisNummer)";
                 command = new OleDbCommand(query, conn);
-                command.Parameters.Add("@p_Locatie", OleDbType.Integer).Value = NieuwId("LOCATIE");
+                command.Parameters.Add("@p_Locatie", OleDbType.Integer).Value = nieuwId;
                 command.Parameters.Add("@p_v_Naam", OleDbType.VarChar).Value = vNaam;
                 command.Parameters.Add("@p_sp_Naam",OleDbType.VarChar).Value = shNaam;
                 command.Parameters.Add("@p_Plaats",OleDbType.VarChar).Value = plaats;
@@ -589,9 +590,10 @@ namespace Turven_FraGie.Database_en_Administratie
             try
             {
                 conn.Open();
+                int nieuwId = TeamSeq();
                 string query = "INSERT INTO TEAM VALUES(@p_team_id, @p_Vereniging_Naam, @p_Team_Code)";
                 command = new OleDbCommand(query, conn);
-                command.Parameters.Add("@p_team_id", OleDbType.Integer).Value = NieuwId("TEAM");
+                command.Parameters.Add("@p_team_id", OleDbType.Integer).Value = nieuwId;
                 command.Parameters.Add("@p_Vereniging_Naam", OleDbType.VarChar).Value = verenigingNaam;
                 command.Parameters.Add("@p_Team_Code", OleDbType.VarChar).Value = teamCode;
                 command.ExecuteNonQuery();
@@ -661,9 +663,10 @@ namespace Turven_FraGie.Database_en_Administratie
             try
             {
                 conn.Open();
+                int nieuwID = Competitie_TeamSeq();
                 string query = "INSERT INTO COMPETITIE_TEAM VALUES(@p_comp_id, @p_Comp_Code, @p_Team_ID)";
                 command = new OleDbCommand(query, conn);
-                command.Parameters.Add("@p_comp_id", OleDbType.Integer).Value = NieuwId("COMPETITIE");
+                command.Parameters.Add("@p_comp_id", OleDbType.Integer).Value = nieuwID;
                 command.Parameters.Add("@p_Comp_Code", OleDbType.VarChar).Value = compCode;
                 command.Parameters.Add("@p_comp_id", OleDbType.Integer).Value = teamID;
                 command.ExecuteNonQuery();
@@ -708,9 +711,13 @@ namespace Turven_FraGie.Database_en_Administratie
             try
             {
                 conn.Open();
+                int spelerID = SpelerSeq();
+                int positieID = PositieSeq();
+                int verenigingID = Speler_VerenigingSeq();
+                int team_spelerID = Team_SpelerSeq();
                 string query = "INSERT INTO SPELER VALUES(@v_Speler_ID, @p_Voornaam, @p_Achternaam, @p_Rugnummer)";
                 command = new OleDbCommand(query, conn);
-                int spelerID = NieuwId("SPELER");
+                
                 command.Parameters.Add("@v_Speler_ID", OleDbType.Integer).Value = spelerID;
                 command.Parameters.Add("@p_Voornaam", OleDbType.VarChar).Value = voornaam;
                 command.Parameters.Add("@p_Achternaam", OleDbType.VarChar).Value = achternaam;
@@ -719,21 +726,21 @@ namespace Turven_FraGie.Database_en_Administratie
 
                 query = "INSERT INTO POSITIE VALUES(@p_positie_id, @v_Speler_ID, @p_Fav_Pos)";
                 command = new OleDbCommand(query, conn);
-                command.Parameters.Add("@p_positie_id", OleDbType.Integer).Value = NieuwId("POSITIE");
+                command.Parameters.Add("@p_positie_id", OleDbType.Integer).Value = positieID;
                 command.Parameters.Add("@v_Speler_ID", OleDbType.Integer).Value = spelerID;
                 command.Parameters.Add("@p_Fav_Pos", OleDbType.VarChar).Value = favPos;
                 command.ExecuteNonQuery();
 
                 query = "INSERT INTO SPELER_VERENIGING VALUES(@p_spelerv_id, @v_Speler_ID, @p_Vereniging_Naam)";
                 command = new OleDbCommand(query, conn);
-                command.Parameters.Add("@p_spelerv_id", OleDbType.Integer).Value = NieuwId("SPELER_VERENIGING");
+                command.Parameters.Add("@p_spelerv_id", OleDbType.Integer).Value = verenigingID;
                 command.Parameters.Add("@v_Speler_ID", OleDbType.Integer).Value = spelerID;
                 command.Parameters.Add("@p_Vereniging_Naam", OleDbType.VarChar).Value = verenigingNaam;
                 command.ExecuteNonQuery();
 
                 query = "INSERT INTO TEAM_SPELER VALUES(@p_team_speler_id, @p_Team_ID, @v_Speler_ID)";
                 command = new OleDbCommand(query, conn);
-                command.Parameters.Add("@p_team_speler_id", OleDbType.Integer).Value = NieuwId("TEAM_SPELER");
+                command.Parameters.Add("@p_team_speler_id", OleDbType.Integer).Value = team_spelerID;
                 command.Parameters.Add("@p_Team_ID", OleDbType.Integer).Value = team_id;
                 command.Parameters.Add("@v_Speler_ID", OleDbType.Integer).Value = spelerID;
                 command.ExecuteNonQuery();
@@ -841,32 +848,164 @@ namespace Turven_FraGie.Database_en_Administratie
         #endregion
         #region Helper Functies
         /// <summary>
-        /// Reken het nieuwe ID aan voor een bepaalde tabel
+        /// Sequence van team
         /// </summary>
-        public int NieuwId(string tabelNaam)
+        #region Sequences
+        public int TeamSeq()
         {
             try
             {
-                conn.Open();
-                string query = "SELECT MAX(ID) + 1 FROM @tabelNaam";
+                string query = "SELECT Max(ID)+1 FROM TEAM";
                 command = new OleDbCommand(query, conn);
-                command.Parameters.Add("@tabelNaam", OleDbType.VarChar).Value = tabelNaam;
                 OleDbDataReader dataReader = command.ExecuteReader();
-                while(dataReader.Read())
+                while (dataReader.Read())
                 {
                     return Convert.ToInt32(dataReader[0]);
                 }
                 return 1;
             }
-            catch(Exception)
+            catch (Exception)
             {
                 return -1;
             }
             finally
             {
-                conn.Close();
             }
         }
+
+        public int LocatieSeq()
+        {
+            try
+            {
+                string query = "SELECT Max(ID)+1 FROM LOCATIE";
+                command = new OleDbCommand(query, conn);
+                OleDbDataReader dataReader = command.ExecuteReader();
+                while (dataReader.Read())
+                {
+                    return Convert.ToInt32(dataReader[0]);
+                }
+                return 1;
+            }
+            catch (Exception)
+            {
+                return -1;
+            }
+            finally
+            {
+            }
+        }
+
+        public int Competitie_TeamSeq()
+        {
+            try
+            {
+                string query = "SELECT Max(ID)+1 FROM COMPETITIE_TEAM";
+                command = new OleDbCommand(query, conn);
+                OleDbDataReader dataReader = command.ExecuteReader();
+                while (dataReader.Read())
+                {
+                    return Convert.ToInt32(dataReader[0]);
+                }
+                return 1;
+            }
+            catch (Exception)
+            {
+                return -1;
+            }
+            finally
+            {
+            }
+        }
+
+        public int SpelerSeq()
+        {
+            try
+            {
+                string query = "SELECT Max(ID)+1 FROM SPELER";
+                command = new OleDbCommand(query, conn);
+                OleDbDataReader dataReader = command.ExecuteReader();
+                while (dataReader.Read())
+                {
+                    return Convert.ToInt32(dataReader[0]);
+                }
+                return 1;
+            }
+            catch (Exception)
+            {
+                return -1;
+            }
+            finally
+            {
+            }
+        }
+
+        public int PositieSeq()
+        {
+            try
+            {
+                string query = "SELECT Max(ID)+1 FROM POSITIE";
+                command = new OleDbCommand(query, conn);
+                OleDbDataReader dataReader = command.ExecuteReader();
+                while (dataReader.Read())
+                {
+                    return Convert.ToInt32(dataReader[0]);
+                }
+                return 1;
+            }
+            catch (Exception)
+            {
+                return -1;
+            }
+            finally
+            {
+            }
+        }
+
+        public int Speler_VerenigingSeq()
+        {
+            try
+            {
+                string query = "SELECT Max(ID)+1 FROM SPELER_VERENIGING";
+                command = new OleDbCommand(query, conn);
+                OleDbDataReader dataReader = command.ExecuteReader();
+                while (dataReader.Read())
+                {
+                    return Convert.ToInt32(dataReader[0]);
+                }
+                return 1;
+            }
+            catch (Exception)
+            {
+                return -1;
+            }
+            finally
+            {
+            }
+        }
+
+        public int Team_SpelerSeq()
+        {
+            try
+            {
+                string query = "SELECT Max(ID)+1 FROM TEAM_SPELER";
+                command = new OleDbCommand(query, conn);
+                OleDbDataReader dataReader = command.ExecuteReader();
+                while (dataReader.Read())
+                {
+                    return Convert.ToInt32(dataReader[0]);
+                }
+                return 1;
+            }
+            catch (Exception)
+            {
+                return -1;
+            }
+            finally
+            {
+            }
+        }
+        #endregion
+        
 
         #endregion
     }

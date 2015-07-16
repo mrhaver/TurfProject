@@ -283,6 +283,10 @@ namespace Turven_FraGie.Forms
         private void lbTeamVerenigingen_SelectedIndexChanged(object sender, EventArgs e)
         {
             VulTeams(lbTeams);
+            if(lbTeams.Items.Count == 0)
+            {
+                tbWTeamCode.Text = "";
+            }
         }
 
         private void lbTeams_SelectedIndexChanged(object sender, EventArgs e)
@@ -291,6 +295,10 @@ namespace Turven_FraGie.Forms
             {
                 Team team = (Team)lbTeams.SelectedItem;
                 tbWTeamCode.Text = team.TeamCode;
+            }
+            else
+            {
+                tbWTeamCode.Text = "";
             }
         }
 
