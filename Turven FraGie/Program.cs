@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Turven_FraGie.Forms;
 
 namespace Turven_FraGie
 {
@@ -16,7 +17,7 @@ namespace Turven_FraGie
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new InlogForm());
+            Application.Run(new MaakAccountForm());
         }
     }
 }

@@ -351,6 +351,7 @@ namespace Turven_FraGie.Forms
                     MessageBox.Show("Team verwijderd");
                     VulTeams(lbTeams);
                     VulAlleTeamsVer(lbCTVTeams);
+                    tbWTeamCode.Text = "";
                 }
             }
             else if (dialogResult == DialogResult.No)

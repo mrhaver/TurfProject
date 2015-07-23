@@ -636,11 +636,15 @@ namespace Turven_FraGie.Database_en_Administratie
             try
             {
                 conn.Open();
-                string query = "DELETE FROM TEAM WHERE ID = @id";
+                string query = "DELETE FROM TEAM_SPELER WHERE TEAM_ID = @id";
                 command = new OleDbCommand(query, conn);
                 command.Parameters.Add("@id", OleDbType.Integer).Value = id;
                 command.ExecuteNonQuery();
-                query = "DELETE FROM TEAM_SPELER WHERE TEAM_ID = @id";
+                query = "DELETE FROM COMPETITIE_TEAM WHERE TEAM_ID = @id";
+                command = new OleDbCommand(query, conn);
+                command.Parameters.Add("@id", OleDbType.Integer).Value = id;
+                command.ExecuteNonQuery();
+                query = "DELETE FROM TEAM WHERE ID = @id";
                 command = new OleDbCommand(query, conn);
                 command.Parameters.Add("@id", OleDbType.Integer).Value = id;
                 command.ExecuteNonQuery();

@@ -59,14 +59,19 @@
             // 
             // tbInlognaam
             // 
+            this.tbInlognaam.BackColor = System.Drawing.SystemColors.InactiveCaption;
+            this.tbInlognaam.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.tbInlognaam.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.tbInlognaam.Location = new System.Drawing.Point(894, 230);
             this.tbInlognaam.Name = "tbInlognaam";
             this.tbInlognaam.Size = new System.Drawing.Size(225, 36);
             this.tbInlognaam.TabIndex = 3;
+            this.tbInlognaam.Text = " ";
             // 
             // tbWachtwoord
             // 
+            this.tbWachtwoord.BackColor = System.Drawing.SystemColors.InactiveCaption;
+            this.tbWachtwoord.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.tbWachtwoord.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.tbWachtwoord.Location = new System.Drawing.Point(894, 270);
             this.tbWachtwoord.Name = "tbWachtwoord";
@@ -77,6 +82,7 @@
             // 
             // btnLogIn
             // 
+            this.btnLogIn.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.btnLogIn.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnLogIn.Location = new System.Drawing.Point(894, 339);
             this.btnLogIn.Name = "btnLogIn";
@@ -88,13 +94,15 @@
             // 
             // btnMaakAccount
             // 
+            this.btnMaakAccount.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.btnMaakAccount.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.btnMaakAccount.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnMaakAccount.Location = new System.Drawing.Point(636, 339);
             this.btnMaakAccount.Name = "btnMaakAccount";
             this.btnMaakAccount.Size = new System.Drawing.Size(225, 69);
             this.btnMaakAccount.TabIndex = 6;
             this.btnMaakAccount.Text = "Maak Account";
-            this.btnMaakAccount.UseVisualStyleBackColor = true;
+            this.btnMaakAccount.UseVisualStyleBackColor = false;
             this.btnMaakAccount.Click += new System.EventHandler(this.btnMaakAccount_Click);
             // 
             // label3
@@ -111,6 +119,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.SystemColors.ActiveCaption;
             this.ClientSize = new System.Drawing.Size(1914, 1045);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.btnMaakAccount);
@@ -119,6 +128,7 @@
             this.Controls.Add(this.tbInlognaam);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
+            this.HelpButton = true;
             this.Name = "InlogForm";
             this.Text = "Inloggen";
             this.ResumeLayout(false);

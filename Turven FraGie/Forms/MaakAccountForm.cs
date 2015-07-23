@@ -46,7 +46,9 @@ namespace Turven_FraGie.Forms
         private void btnMaakTurver_Click_1(object sender, EventArgs e)
         {
             Vereniging v = (Vereniging)lbVerenigingen.SelectedItem;
-            MaakPersoon("Turver", v.Naam);
+            gbNaarTurven.Visible = true;
+            tbVerNaam.Text = v.Naam;
+            gbKiesVereniging.Enabled = false;
         }
 
         /// <summary>
@@ -60,10 +62,12 @@ namespace Turven_FraGie.Forms
             if (administratie.HeeftBeheerder(vereniging.Naam, out error))
             {
                 btnMaakBeheerder.Enabled = false;
+                btnLogInBeh.Visible = true;
             }
             else
             {
                 btnMaakBeheerder.Enabled = true;
+                btnLogInBeh.Visible = false;
             }
         }
 
@@ -98,7 +102,7 @@ namespace Turven_FraGie.Forms
         /// </summary>
         private void btnAnnuleer_Click(object sender, EventArgs e)
         {
-            Annuleer();
+            Annuleer(gbMaakPersoon);
         }
 
         /// <summary>
@@ -123,14 +127,14 @@ namespace Turven_FraGie.Forms
                                 return;
                             }
                         }
-                        if (!administratie.MaakAccount(tbInlogNaam.Text, tbVerenigingNaam.Text, tbWachtwoord.Text, tbAccountType.Text.ToUpper()))
+                        if (!administratie.MaakAccount(tbInlogNaam.Text, tbVerenigingNaam.Text, tbWachtwoord.Text, "BEHEERDER"))
                         {
                             MessageBox.Show("Er ging iets mis met de database, raadpleeg de beheerder van de applicatie");
                         }
                         else
                         {
                             MessageBox.Show("Account aangemaakt");
-                            Annuleer();
+                            Annuleer(gbMaakPersoon);
                         }
                     }
                     else
@@ -182,7 +186,6 @@ namespace Turven_FraGie.Forms
            gbKiesVereniging.Enabled = false;
            gbMaakPersoon.Text = "Maak " + accountType;
            tbVerenigingNaam.Text = vereniging;
-           tbAccountType.Text = accountType;
            btnMaakPersoon.Text = "Maak " + accountType;
            gbMaakPersoon.Visible = true;
        }          
@@ -190,12 +193,87 @@ namespace Turven_FraGie.Forms
         /// <summary>
         /// Maakt de ene groupbox enabled en de andere invisible
         /// </summary>
-        private void Annuleer()
+        private void Annuleer(GroupBox gbMaakOfTurf)
        {
            gbKiesVereniging.Enabled = true;
-           gbMaakPersoon.Visible = false;
+           gbMaakOfTurf.Visible = false;
        }
         #endregion
+
+        private void btnAnnuleerTurf_Click(object sender, EventArgs e)
+        {
+            Annuleer(gbNaarTurven);
+        }
+
+        /// <summary>
+        /// Er moet een account worden aangemaakt en daarna moet dit account kunnen turven
+        /// </summary>
+        private void btnNaarTurven_Click(object sender, EventArgs e)
+        {
+            if(tbTurfNaam.Text != "")
+            {
+                if(tbVerNaam.Text != "")
+                {
+                    if(!administratie.MaakAccount(tbTurfNaam.Text, tbVerNaam.Text, "", "TURVER"))
+                    {
+                        MessageBox.Show("Er ging iets mis met de database, raadpleeg de beheerder van de applicatie");
+                    }
+                    else
+                    {
+                        MessageBox.Show("Het turven is nog niet geïmplementeerd u kunt nog niet verder");
+                        Annuleer(gbNaarTurven);
+                    }
+                }
+            }
+        }
+
+        private void btnAnnuleerLogin_Click(object sender, EventArgs e)
+        {
+            Annuleer(gbLogIn);
+        }
+
+        private void btnLogInBeh_Click(object sender, EventArgs e)
+        {
+            gbLogIn.Visible = true;
+            gbKiesVereniging.Enabled = false;
+        }
+
+        private void btnLogIn_Click(object sender, EventArgs e)
+        {
+            LogIn();
+        }
+
+        private void LogIn()
+        {
+            foreach (Account a in administratie.Accounts)
+            {
+                if (a.InlogNaam == tbLogInNaam.Text)
+                {
+                    if (a.LogIn(tbLogInWW.Text))
+                    {
+                        administratie.NuIngelogd = administratie.GeefAccount(tbLogInNaam.Text);
+                        if (administratie.NuIngelogd.AccountType == "TURVER")
+                        {
+                            MessageBox.Show("Er kan nog niet geturfd worden");
+                        }
+                        else
+                        {
+                            TeamBeheer tbhForm = new TeamBeheer();
+                            tbhForm.Show();
+                            this.Hide();
+                        }
+                        return;
+                    }
+                    else
+                    {
+                        MessageBox.Show("Foute inlognaam- wachtwoordcombinatie");
+                        return;
+                    }
+                }
+            }
+            MessageBox.Show("Inlognaam niet gevonden");
+        }
+
 
 
 
